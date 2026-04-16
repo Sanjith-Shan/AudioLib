@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		08A44222C1D384067C9527A0 /* Bookmark+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F04621D1A9260B8C792C610 /* Bookmark+CoreDataProperties.swift */; };
+		1060F880300FF81391988921 /* LocalNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48F2A1867125A583CF451F8 /* LocalNotifications.swift */; };
 		10C5D0CF3A58C7BFDEE0E653 /* SleepTimerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86006797F8CEF793DD032A91 /* SleepTimerSheet.swift */; };
 		1959F08FDC00C9F96FA09999 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953A7A888A06B00F36330FD1 /* SettingsView.swift */; };
 		1DAC5C98D46F8155500DC751 /* Bookmark+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4FE44D22D87844A175BAB6 /* Bookmark+CoreDataClass.swift */; };
@@ -15,6 +16,7 @@
 		22715F3420FE2C4BE154D0FD /* RichTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE24DB0CEE993DAF692C24AD /* RichTextEditor.swift */; };
 		23A8E8835E6182BE8EEC2C87 /* Color+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9287EC694CE40968561460EA /* Color+Hex.swift */; };
 		26593D9D7735BA36580C77AA /* AudioLibUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C122AFEBC7BC61ACFF7AE9B /* AudioLibUITests.swift */; };
+		2DD0427B0A05BAD8CA423B03 /* OnboardingSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F246957FA15DE75C99E77D18 /* OnboardingSheet.swift */; };
 		3345ABD401D42C16D726B8B3 /* DownloadTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D228B1831B847A21F08A9949 /* DownloadTabView.swift */; };
 		344F5284385C434A1AAFB220 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEA65B6C6D42F603EE008D7 /* Card.swift */; };
 		38529DA32CDF2763E7164E8C /* CoreData+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBFB20155A75BE1C93C7D5CF /* CoreData+Extensions.swift */; };
@@ -54,6 +56,7 @@
 		C0CC1CE9DA367FA7BA01F66E /* FormattingToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74EAEAFD3EC964F07A71A764 /* FormattingToolbar.swift */; };
 		C540783255440E306251D2BC /* LibraryTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10C3508CD1A079FA2A03221 /* LibraryTabView.swift */; };
 		C6398808401C172EA4542927 /* AudioLibApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8CA74BF58D2E3D6F5241BF /* AudioLibApp.swift */; };
+		C8DE8BAF9D3361DA31F4356E /* StorageUsageCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C49B8C5A39A955BCAD1B914 /* StorageUsageCalculator.swift */; };
 		CF0552BB6F8D82CF3A28F9D3 /* NoteEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A64505F91286E403512CE2E /* NoteEditorView.swift */; };
 		D103C250A55079FEFA342431 /* PasteURLCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF65CC4E53C964944587D1E /* PasteURLCard.swift */; };
 		D6E6E9449E7533DE932E0219 /* Inter-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 429A6D220FA849F95B58C1F3 /* Inter-Regular.ttf */; };
@@ -127,6 +130,7 @@
 		74EAEAFD3EC964F07A71A764 /* FormattingToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormattingToolbar.swift; sourceTree = "<group>"; };
 		76E8DDDC3D3F1E077019F593 /* DownloadJob+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DownloadJob+CoreDataClass.swift"; sourceTree = "<group>"; };
 		7A4C7D8627C925B3266BEF00 /* DurationFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DurationFormatter.swift; sourceTree = "<group>"; };
+		7C49B8C5A39A955BCAD1B914 /* StorageUsageCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageUsageCalculator.swift; sourceTree = "<group>"; };
 		7DF65CC4E53C964944587D1E /* PasteURLCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasteURLCard.swift; sourceTree = "<group>"; };
 		86006797F8CEF793DD032A91 /* SleepTimerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepTimerSheet.swift; sourceTree = "<group>"; };
 		862F87938D5F1FFFF70B5416 /* DownloadRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadRow.swift; sourceTree = "<group>"; };
@@ -143,6 +147,7 @@
 		AD33C3AED2016EC393DC5391 /* ScrubberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrubberView.swift; sourceTree = "<group>"; };
 		AECF050766E247DD34B56B7F /* PlayerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerController.swift; sourceTree = "<group>"; };
 		B450CF1854EC52C7BAA219F2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		B48F2A1867125A583CF451F8 /* LocalNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotifications.swift; sourceTree = "<group>"; };
 		C2AEBAB68C200D62AC89483B /* FlatTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlatTextField.swift; sourceTree = "<group>"; };
 		C6F2E60DD1E395A8B7D1D5B3 /* OnDeviceYouTubeResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnDeviceYouTubeResolver.swift; sourceTree = "<group>"; };
 		C757CE830DED5400951CA0B9 /* DownloadJob+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DownloadJob+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -157,6 +162,7 @@
 		E10C3508CD1A079FA2A03221 /* LibraryTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryTabView.swift; sourceTree = "<group>"; };
 		E682E67CE1EF0D2D9CF362ED /* Font+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Theme.swift"; sourceTree = "<group>"; };
 		ECA99B2CF709043564FB8692 /* NoteDoc+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteDoc+CoreDataClass.swift"; sourceTree = "<group>"; };
+		F246957FA15DE75C99E77D18 /* OnboardingSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSheet.swift; sourceTree = "<group>"; };
 		F9875015D1BC91D3F6BD7A07 /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 		FBFB20155A75BE1C93C7D5CF /* CoreData+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreData+Extensions.swift"; sourceTree = "<group>"; };
 		FF1E9FE2C48646E884517F6B /* CoverArtView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverArtView.swift; sourceTree = "<group>"; };
@@ -230,6 +236,7 @@
 				A432AE122311821846AA1ADE /* Download */,
 				725BD6884838FD612E061C09 /* Library */,
 				03DC262FB8221D14E175A43F /* Notes */,
+				8F7D59094F0297BD63C8945C /* Onboarding */,
 				A31EE032CE5AAD66937A409B /* Player */,
 				323A937D60600AE43FE8C120 /* Settings */,
 			);
@@ -270,6 +277,14 @@
 				AECF050766E247DD34B56B7F /* PlayerController.swift */,
 			);
 			path = Audio;
+			sourceTree = "<group>";
+		};
+		8F7D59094F0297BD63C8945C /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				F246957FA15DE75C99E77D18 /* OnboardingSheet.swift */,
+			);
+			path = Onboarding;
 			sourceTree = "<group>";
 		};
 		9473C8671EE1C3B04F24F14F /* App */ = {
@@ -360,6 +375,8 @@
 			children = (
 				63A23768BBF91BA135CBB0CB /* AppRouter.swift */,
 				7A4C7D8627C925B3266BEF00 /* DurationFormatter.swift */,
+				B48F2A1867125A583CF451F8 /* LocalNotifications.swift */,
+				7C49B8C5A39A955BCAD1B914 /* StorageUsageCalculator.swift */,
 				7D16FEE1A0E714C6442CA960 /* Audio */,
 				F815FB3E6F9050CEFA3D496E /* Download */,
 				BF5C9D8F7BA9596BF307F2E5 /* YouTube */,
@@ -574,6 +591,7 @@
 				C0CC1CE9DA367FA7BA01F66E /* FormattingToolbar.swift in Sources */,
 				FD4DB580374C3C54E8E95BB8 /* LibraryRow.swift in Sources */,
 				C540783255440E306251D2BC /* LibraryTabView.swift in Sources */,
+				1060F880300FF81391988921 /* LocalNotifications.swift in Sources */,
 				5189BDE76CF72DE8F6AB336A /* MiniPlayer.swift in Sources */,
 				81765940892FDC6C29E86029 /* NoteDoc+CoreDataClass.swift in Sources */,
 				E642997F7E57208FADB6881C /* NoteDoc+CoreDataProperties.swift in Sources */,
@@ -582,6 +600,7 @@
 				A74AE6C3CD9D0FEC16A24AFD /* NoteStore.swift in Sources */,
 				A53EE2F83D758ACA1B4D1F60 /* NotesTabView.swift in Sources */,
 				E8C728608AD389E5E2B079AC /* OnDeviceYouTubeResolver.swift in Sources */,
+				2DD0427B0A05BAD8CA423B03 /* OnboardingSheet.swift in Sources */,
 				D103C250A55079FEFA342431 /* PasteURLCard.swift in Sources */,
 				466FE492EB869698BCA83636 /* PersistenceController.swift in Sources */,
 				6F8EE06D42D125E3AF902962 /* PillButton.swift in Sources */,
@@ -594,6 +613,7 @@
 				1959F08FDC00C9F96FA09999 /* SettingsView.swift in Sources */,
 				10C5D0CF3A58C7BFDEE0E653 /* SleepTimerSheet.swift in Sources */,
 				4485B237F3AEEFBFF200401F /* SpeedSheet.swift in Sources */,
+				C8DE8BAF9D3361DA31F4356E /* StorageUsageCalculator.swift in Sources */,
 				7301B1E67476345FB3FCD287 /* Theme.swift in Sources */,
 				9A7901E3C59714DB812A70F5 /* YouTubeResolver.swift in Sources */,
 				D7278DB4393B1057B1224CE3 /* YouTubeResolverFactory.swift in Sources */,

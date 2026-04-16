@@ -72,12 +72,14 @@ class PlayerController {
         updateNowPlayingInfo()
     }
 
-    func skipForward(_ seconds: Double = 15) {
-        seek(to: currentTime + seconds)
+    func skipForward() {
+        let interval = UserDefaults.standard.double(forKey: "audiolib.defaultSkipInterval")
+        seek(to: currentTime + (interval > 0 ? interval : 15))
     }
 
-    func skipBackward(_ seconds: Double = 15) {
-        seek(to: currentTime - seconds)
+    func skipBackward() {
+        let interval = UserDefaults.standard.double(forKey: "audiolib.defaultSkipInterval")
+        seek(to: currentTime - (interval > 0 ? interval : 15))
     }
 
     func setRate(_ rate: Float) {
@@ -195,11 +197,13 @@ class PlayerController {
         center.togglePlayPauseCommand.addTarget { [weak self] _ in
             self?.togglePlayPause(); return .success
         }
-        center.skipForwardCommand.preferredIntervals = [15]
+        let storedInterval = UserDefaults.standard.double(forKey: "audiolib.defaultSkipInterval")
+        let skipIntervalNumber = NSNumber(value: storedInterval > 0 ? storedInterval : 15)
+        center.skipForwardCommand.preferredIntervals = [skipIntervalNumber]
         center.skipForwardCommand.addTarget { [weak self] _ in
             self?.skipForward(); return .success
         }
-        center.skipBackwardCommand.preferredIntervals = [15]
+        center.skipBackwardCommand.preferredIntervals = [skipIntervalNumber]
         center.skipBackwardCommand.addTarget { [weak self] _ in
             self?.skipBackward(); return .success
         }

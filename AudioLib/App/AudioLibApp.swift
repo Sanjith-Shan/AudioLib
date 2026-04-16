@@ -7,6 +7,7 @@ struct AudioLibApp: App {
 
     init() {
         AudioSessionManager.shared.activate()
+        LocalNotifications.requestPermission()
     }
 
     var body: some Scene {

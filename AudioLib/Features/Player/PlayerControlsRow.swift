@@ -2,12 +2,13 @@ import SwiftUI
 
 struct PlayerControlsRow: View {
     @State private var player = PlayerController.shared
+    @AppStorage("audiolib.defaultSkipInterval") private var skipInterval: Double = 15
 
     var body: some View {
         HStack(spacing: Theme.Spacing.xxl) {
-            // Skip back 15s
+            // Skip backward
             Button { player.skipBackward() } label: {
-                Image(systemName: "gobackward.15")
+                Image(systemName: skipSymbol(forward: false))
                     .font(.system(size: 28))
                     .foregroundStyle(Theme.Colors.white)
                     .frame(width: 56, height: 56)
@@ -25,14 +26,20 @@ struct PlayerControlsRow: View {
             }
             .buttonStyle(.plain)
 
-            // Skip forward 15s
+            // Skip forward
             Button { player.skipForward() } label: {
-                Image(systemName: "goforward.15")
+                Image(systemName: skipSymbol(forward: true))
                     .font(.system(size: 28))
                     .foregroundStyle(Theme.Colors.white)
                     .frame(width: 56, height: 56)
             }
             .buttonStyle(.plain)
         }
+    }
+
+    private func skipSymbol(forward: Bool) -> String {
+        let supported = [10, 15, 30, 45, 60, 75, 90]
+        let prefix = forward ? "goforward" : "gobackward"
+        return supported.contains(Int(skipInterval)) ? "\(prefix).\(Int(skipInterval))" : prefix
     }
 }

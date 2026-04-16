@@ -222,6 +222,7 @@ final class DownloadManager: NSObject, ObservableObject {
             }
 
             await MainActor.run {
+                LocalNotifications.scheduleDownloadComplete(bookTitle: capturedMetadata.title)
                 self.updateJob(jobID: capturedJobID, state: "done", progress: 1.0)
                 self.activeDownloads.removeValue(forKey: capturedBookID)
             }

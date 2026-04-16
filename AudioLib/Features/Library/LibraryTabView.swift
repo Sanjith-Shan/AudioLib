@@ -12,7 +12,9 @@ struct LibraryTabView: View {
 
     @State private var searchText = ""
     @State private var showingSettings = false
+    @State private var showingEditSheet: Book? = nil
     @Environment(AppRouter.self) private var router
+    @Environment(\.managedObjectContext) private var context
 
     private var filteredBooks: [Book] {
         if searchText.isEmpty { return Array(books) }
@@ -43,6 +45,14 @@ struct LibraryTabView: View {
                                         router.currentBookID = book.id
                                         router.showingPlayer = true
                                     }
+                                    .contextMenu {
+                                        Button { showingEditSheet = book } label: {
+                                            Label("Edit Info", systemImage: "pencil")
+                                        }
+                                        Button(role: .destructive) { deleteBook(book) } label: {
+                                            Label("Delete", systemImage: "trash")
+                                        }
+                                    }
                             }
                         }
                         .padding(.vertical, Theme.Spacing.sm)
@@ -63,7 +73,23 @@ struct LibraryTabView: View {
             }
             .sheet(isPresented: $showingSettings) {
                 SettingsView()
+                    .environment(\.managedObjectContext, context)
+            }
+            .sheet(item: $showingEditSheet) { book in
+                BookEditSheet(book: book)
+                    .environment(\.managedObjectContext, context)
             }
         }
+    }
+
+    private func deleteBook(_ book: Book) {
+        PlayerController.shared.stop()
+        if AppRouter.shared.currentBookID == book.id {
+            AppRouter.shared.currentBookID = nil
+            AppRouter.shared.showingPlayer = false
+        }
+        FileStore.deleteBook(id: book.id)
+        context.delete(book)
+        try? context.save()
     }
 }

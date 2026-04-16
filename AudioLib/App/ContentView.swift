@@ -3,6 +3,8 @@ import CoreData
 
 struct ContentView: View {
     @State private var router = AppRouter.shared
+    @AppStorage("audiolib.hasOnboarded") private var hasOnboarded = false
+    @State private var showOnboarding = false
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -36,6 +38,10 @@ struct ContentView: View {
             }
         }
         .environment(router)
+        .onAppear { showOnboarding = !hasOnboarded }
+        .sheet(isPresented: $showOnboarding, onDismiss: { hasOnboarded = true }) {
+            OnboardingSheet()
+        }
     }
 
     private var safeAreaBottom: CGFloat {
