@@ -6,7 +6,10 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         handleEventsForBackgroundURLSession identifier: String,
         completionHandler: @escaping () -> Void
     ) {
-        // Will be wired to DownloadManager in Phase 3
-        completionHandler()
+        if identifier == "com.sanjith.audiolib.bg" {
+            DownloadManager.shared.handleBackgroundCompletion(completionHandler)
+        } else {
+            completionHandler()
+        }
     }
 }

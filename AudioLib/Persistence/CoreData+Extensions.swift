@@ -10,20 +10,14 @@ extension Book {
         return min(progressSeconds / durationSeconds, 1.0)
     }
 
-    /// URL to the audio file in the app's Documents/audio directory.
-    /// FileStore (Phase 3) will provide the canonical implementation;
-    /// this stub uses the standard documents path.
-    var audioURL: URL? {
-        guard !audioFilename.isEmpty else { return nil }
-        let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        return docs.appendingPathComponent("audio/\(audioFilename)")
+    /// URL to the audio file managed by FileStore.
+    var audioURL: URL {
+        FileStore.audioURL(for: id)
     }
 
-    /// URL to the cover art file in the app's Documents/art directory.
+    /// URL to the cover art file managed by FileStore, or nil if no art has been downloaded.
     var artURL: URL? {
-        guard let filename = artFilename, !filename.isEmpty else { return nil }
-        let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        return docs.appendingPathComponent("art/\(filename)")
+        artFilename != nil ? FileStore.artURL(for: id) : nil
     }
 
     /// Factory method: creates and inserts a new Book managed object.

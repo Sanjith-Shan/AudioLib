@@ -1,8 +1,9 @@
 import SwiftUI
 
-/// A dark card with a URL input field and download button.
 struct PasteURLCard: View {
-    @State private var urlText: String = ""
+    @Binding var urlText: String
+    @Binding var isDownloading: Bool
+    let onDownload: () -> Void
 
     var body: some View {
         VStack(alignment: .leading, spacing: Theme.Spacing.md) {
@@ -10,23 +11,54 @@ struct PasteURLCard: View {
                 .font(.titleLg)
                 .foregroundStyle(Theme.Colors.white)
 
-            FlatTextField(
-                placeholder: "Paste YouTube URL",
+            // Use a custom text field variant that looks good on the dark card background
+            DarkFlatTextField(
                 text: $urlText,
-                keyboardType: .URL
+                placeholder: "Paste YouTube URL"
             )
 
-            PillButton(title: "Download", style: .primary) {
-                // Phase 3: will trigger DownloadManager
+            HStack {
+                PillButton(
+                    title: isDownloading ? "Downloading..." : "Download",
+                    style: .primary
+                ) {
+                    onDownload()
+                }
+                .disabled(urlText.isEmpty || isDownloading)
+                .opacity(urlText.isEmpty || isDownloading ? 0.5 : 1.0)
+
+                Spacer()
             }
         }
-        .padding(Theme.Spacing.md)
+        .padding(Theme.Spacing.lg)
         .background(Theme.Colors.dark)
         .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
     }
 }
 
+/// A text field styled for use on dark backgrounds (dark card surface).
+private struct DarkFlatTextField: View {
+    @Binding var text: String
+    let placeholder: String
+
+    var body: some View {
+        TextField(placeholder, text: $text)
+            .font(.bodyRegular)
+            .foregroundStyle(Theme.Colors.dark)
+            .keyboardType(.URL)
+            .autocorrectionDisabled()
+            .textInputAutocapitalization(.never)
+            .padding(.vertical, Theme.Spacing.sm + Theme.Spacing.xs)
+            .padding(.horizontal, Theme.Spacing.md)
+            .background(Theme.Colors.white)
+            .clipShape(Capsule())
+    }
+}
+
 #Preview {
-    PasteURLCard()
+    @Previewable @State var urlText = ""
+    @Previewable @State var isDownloading = false
+    PasteURLCard(urlText: $urlText, isDownloading: $isDownloading) {}
         .padding()
+        .background(Theme.Colors.surface)
 }
