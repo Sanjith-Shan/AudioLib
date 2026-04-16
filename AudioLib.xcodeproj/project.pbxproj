@@ -38,6 +38,7 @@
 		D103C250A55079FEFA342431 /* PasteURLCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF65CC4E53C964944587D1E /* PasteURLCard.swift */; };
 		D6E6E9449E7533DE932E0219 /* Inter-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 429A6D220FA849F95B58C1F3 /* Inter-Regular.ttf */; };
 		D91478F29651D3536EF7BFCE /* FlatTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AEBAB68C200D62AC89483B /* FlatTextField.swift */; };
+		E6117B19B7872741EEB714A7 /* YouTubeKit in Frameworks */ = {isa = PBXBuildFile; productRef = 88B356445A2BF0FFD9AF7C90 /* YouTubeKit */; };
 		E642997F7E57208FADB6881C /* NoteDoc+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C572D2110B6B97C687F0B3F /* NoteDoc+CoreDataProperties.swift */; };
 		E80EE544156AAD3A17796191 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39A7BBECA19F88EF6070C39 /* ContentView.swift */; };
 		ED118ECF19F3C561AA2424BF /* Inter-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 47A98CCE3DF38312B3A54171 /* Inter-SemiBold.ttf */; };
@@ -104,6 +105,17 @@
 		ECA99B2CF709043564FB8692 /* NoteDoc+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteDoc+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FBFB20155A75BE1C93C7D5CF /* CoreData+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreData+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		49DEE683DED4347EDAFEEB4A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E6117B19B7872741EEB714A7 /* YouTubeKit in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		03DC262FB8221D14E175A43F /* Notes */ = {
@@ -307,6 +319,7 @@
 			buildPhases = (
 				8534C815C57719875BC55146 /* Sources */,
 				3174EB92C3FC522C1D7315E8 /* Resources */,
+				49DEE683DED4347EDAFEEB4A /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -314,6 +327,7 @@
 			);
 			name = AudioLib;
 			packageProductDependencies = (
+				88B356445A2BF0FFD9AF7C90 /* YouTubeKit */,
 			);
 			productName = AudioLib;
 			productReference = A91CF75AB56B9C91AA209907 /* AudioLib.app */;
@@ -367,6 +381,9 @@
 			);
 			mainGroup = DAD9A97124C19DBC768C7408;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				8C0036EFAF3FCB461F9B2C28 /* XCRemoteSwiftPackageReference "YouTubeKit" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = D56FF5E15F756EB13E52820B /* Products */;
 			projectDirPath = "";
@@ -738,6 +755,25 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		8C0036EFAF3FCB461F9B2C28 /* XCRemoteSwiftPackageReference "YouTubeKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/alexeichhorn/YouTubeKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.5;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		88B356445A2BF0FFD9AF7C90 /* YouTubeKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8C0036EFAF3FCB461F9B2C28 /* XCRemoteSwiftPackageReference "YouTubeKit" */;
+			productName = YouTubeKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		48753FCD8BC5030A77AE3032 /* AudioLib.xcdatamodeld */ = {
