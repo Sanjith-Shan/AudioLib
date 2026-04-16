@@ -20,6 +20,16 @@ extension Book {
         artFilename != nil ? FileStore.artURL(for: id) : nil
     }
 
+    /// Chapters sorted by startSeconds ascending.
+    var chaptersArray: [Chapter] {
+        (chapters as? Set<Chapter>)?.sorted { $0.startSeconds < $1.startSeconds } ?? []
+    }
+
+    /// Bookmarks sorted by timeSeconds ascending.
+    var bookmarksArray: [Bookmark] {
+        (bookmarks as? Set<Bookmark>)?.sorted { $0.timeSeconds < $1.timeSeconds } ?? []
+    }
+
     /// Factory method: creates and inserts a new Book managed object.
     @discardableResult
     static func create(

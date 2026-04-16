@@ -25,4 +25,9 @@ enum DurationFormatter {
         let remaining = max(0, total - progress)
         return "\(string(from: remaining)) remaining"
     }
+
+    /// Alias for `string(from:)` — formats seconds as a human-readable time string.
+    static func format(seconds: Double) -> String {
+        string(from: seconds)
+    }
 }
