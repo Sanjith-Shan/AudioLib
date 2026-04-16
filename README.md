@@ -1,4 +1,4 @@
-# AudioLib
+# AudioLib 🔊📚
 
 A native iOS app for downloading YouTube audiobooks and listening to them offline.
 
@@ -47,28 +47,6 @@ python companion_server.py
 ```
 
 Then in the app: **Settings → Audio Source → Companion Server**, enter your Mac's local IP address.
-
-## Fonts
-
-The app uses **Inter** (included) for body text. For the full Revolut-inspired display font, add **Aeonik Pro Medium** (`AeonikPro-Medium.otf`) to `AudioLib/Fonts/` and add it to `UIAppFonts` in `Info.plist`.
-
-## Development
-
-```bash
-# Install xcodegen (required)
-brew install xcodegen
-
-# Regenerate project after changing project.yml
-xcodegen generate
-
-# Build (no signing)
-xcodebuild -project AudioLib.xcodeproj -scheme AudioLib \
-  -destination 'generic/platform=iOS' build CODE_SIGNING_ALLOWED=NO
-
-# Run tests
-xcodebuild test -project AudioLib.xcodeproj -scheme AudioLibTests \
-  -destination 'platform=iOS Simulator,name=iPhone 16'
-```
 
 ## Architecture
 
