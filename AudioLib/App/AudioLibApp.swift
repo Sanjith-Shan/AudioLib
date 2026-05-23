@@ -13,7 +13,6 @@ struct AudioLibApp: App {
     init() {
         Task { @MainActor in
             DownloadManager.shared.reconnectOnLaunch()
-            CloudSyncObserver.shared.start()
         }
     }
 
