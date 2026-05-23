@@ -27,8 +27,14 @@ struct AudioLibApp: App {
             #endif
         }
         #if os(macOS)
+        .commands {
+            PlaybackCommands()
+        }
+        #endif
+        #if os(macOS)
         Settings {
             SettingsView()
+                .environment(AppRouter.shared)
                 .environment(\.managedObjectContext, persistence.container.viewContext)
         }
         #endif

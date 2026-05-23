@@ -8,8 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		00A2756A11EC652BDD5D0D77 /* Book+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4275A7632C692B28D033A6B7 /* Book+CoreDataProperties.swift */; };
+		03B916C868D2C40169EAD65D /* MacNowPlayingPane.swift in Sources */ = {isa = PBXBuildFile; fileRef = B107BAA54E5E5CDE7D93DC56 /* MacNowPlayingPane.swift */; };
 		08A44222C1D384067C9527A0 /* Bookmark+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F04621D1A9260B8C792C610 /* Bookmark+CoreDataProperties.swift */; };
 		0941EF32D7E552D15253F9E5 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64A96CF643BCFCA5EE222934 /* EmptyStateView.swift */; };
+		0A8962C1519DE2A086AD7670 /* MacLibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C876A0D51DE30DFD48E489C0 /* MacLibraryView.swift */; };
+		0E5C96FFDACE2AA3B2E94134 /* MacPlayback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D26DBD5D35B04503187F480 /* MacPlayback.swift */; };
 		1060F880300FF81391988921 /* LocalNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48F2A1867125A583CF451F8 /* LocalNotifications.swift */; };
 		107E13BA6894661B4D844294 /* PasteURLCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF65CC4E53C964944587D1E /* PasteURLCard.swift */; };
 		10C5D0CF3A58C7BFDEE0E653 /* SleepTimerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86006797F8CEF793DD032A91 /* SleepTimerSheet.swift */; };
@@ -42,10 +45,12 @@
 		3BEAE78FC66E4681A00BD232 /* ProgressiveDownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E346457CB21ECE4322F0B8AF /* ProgressiveDownloadManager.swift */; };
 		3C306129A8970D2DF43416E3 /* BookmarksSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2249B18FD17842CBB17463E7 /* BookmarksSheet.swift */; };
 		3CDBD598DD7F3A9203AA2B94 /* SyncService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F598E063426D20ADC8593E27 /* SyncService.swift */; };
+		3E23A06C3C9D471EA36E8867 /* MacPlayback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D26DBD5D35B04503187F480 /* MacPlayback.swift */; };
 		419AED84EC839412D7B17C78 /* Chapter+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11630BDFFBA08D030C69EDA4 /* Chapter+CoreDataProperties.swift */; };
 		4485B237F3AEEFBFF200401F /* SpeedSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CAB7382E3FFAAA4664C021 /* SpeedSheet.swift */; };
 		466FE492EB869698BCA83636 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088DAC245A24C7C87DA3CC1D /* PersistenceController.swift */; };
 		481E0DD81E9FD04055563902 /* ChunkedDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B351F759FD5CAA65E61CC41 /* ChunkedDownloader.swift */; };
+		492EA7E4865C64AB3DC3F2B5 /* MacCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E4761151C183B777137160 /* MacCommands.swift */; };
 		49358C2D8E05CF8C8F88B637 /* DownloadRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862F87938D5F1FFFF70B5416 /* DownloadRow.swift */; };
 		494483FB074E83C59D4F067C /* DownloadJob+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C757CE830DED5400951CA0B9 /* DownloadJob+CoreDataProperties.swift */; };
 		4A67C71BCDE88AE30D407526 /* ScrubberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD33C3AED2016EC393DC5391 /* ScrubberView.swift */; };
@@ -54,6 +59,7 @@
 		4B89E2E47147EA9427B45CD5 /* StreamingResourceLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A42076DBDC735D16EA89E0 /* StreamingResourceLoader.swift */; };
 		4CC14E6B1B10892FD5CB1A59 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64A96CF643BCFCA5EE222934 /* EmptyStateView.swift */; };
 		4D52032B0FD11CD235CC4171 /* StreamingResourceLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A42076DBDC735D16EA89E0 /* StreamingResourceLoader.swift */; };
+		4D951B35E25853330F8D4460 /* MacNowPlayingPane.swift in Sources */ = {isa = PBXBuildFile; fileRef = B107BAA54E5E5CDE7D93DC56 /* MacNowPlayingPane.swift */; };
 		4F3A6F4B1C570F9AE8ACC4A7 /* Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB641A16AD781E9E1C08B86 /* Platform.swift */; };
 		5189BDE76CF72DE8F6AB336A /* MiniPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B36523A7CC3437845D6984E /* MiniPlayer.swift */; };
 		54A5BB67781B1B21F21166E5 /* DownloadJob+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E8DDDC3D3F1E077019F593 /* DownloadJob+CoreDataClass.swift */; };
@@ -97,6 +103,7 @@
 		8A9EB02EC64986461B86260E /* DownloadTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D228B1831B847A21F08A9949 /* DownloadTabView.swift */; };
 		8B32E55D007DC59102830158 /* FileStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2697EA7FB4C5980FC63FEE2D /* FileStore.swift */; };
 		8BEEDC701D2B77EC28D0B38A /* BookEditSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBB82091673187A380DE958 /* BookEditSheet.swift */; };
+		8C70085B4DC5B1F816CB603C /* MacLibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C876A0D51DE30DFD48E489C0 /* MacLibraryView.swift */; };
 		90135F20E52E62200DC408AF /* StorageUsageCalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316982A4AA2D2A466CEA8146 /* StorageUsageCalculatorTests.swift */; };
 		91C5D78B4663DB7B2B7C5181 /* DurationFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A4C7D8627C925B3266BEF00 /* DurationFormatter.swift */; };
 		91EA566850492DD030DF67CE /* AppDelegate+macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C35E59354710F7AF15484BB /* AppDelegate+macOS.swift */; };
@@ -105,6 +112,7 @@
 		96917DAD0D2F18EE09B6B2C5 /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D178B74ED0D4DF1B8F59A31 /* DownloadManager.swift */; };
 		99942A0148BF0476084F58EA /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEA65B6C6D42F603EE008D7 /* Card.swift */; };
 		99F0B160B5ED012CE4308CE9 /* BookmarksSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2249B18FD17842CBB17463E7 /* BookmarksSheet.swift */; };
+		9A09052DE9D37E4EBC6048CD /* MacCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E4761151C183B777137160 /* MacCommands.swift */; };
 		9A7901E3C59714DB812A70F5 /* YouTubeResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = D628AAADCF679142CE08D0BC /* YouTubeResolver.swift */; };
 		9F0BD7058B2CE0FC66208E7F /* ChaptersSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37028A294DB8BC28C3092746 /* ChaptersSheet.swift */; };
 		A145E47D3A7483DB935519FA /* FileStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2697EA7FB4C5980FC63FEE2D /* FileStore.swift */; };
@@ -220,6 +228,7 @@
 		4C122AFEBC7BC61ACFF7AE9B /* AudioLibUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioLibUITests.swift; sourceTree = "<group>"; };
 		52E6BA40D5DD35A35551E5BE /* PlayerSecondaryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerSecondaryRow.swift; sourceTree = "<group>"; };
 		5C35E59354710F7AF15484BB /* AppDelegate+macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+macOS.swift"; sourceTree = "<group>"; };
+		5D26DBD5D35B04503187F480 /* MacPlayback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacPlayback.swift; sourceTree = "<group>"; };
 		5FEA65B6C6D42F603EE008D7 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		5FEDDDAA527BCA96A59F05F4 /* AudioSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSessionManager.swift; sourceTree = "<group>"; };
 		62A61E86DC4DD89F03D5D00C /* AudioLibMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioLibMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -255,14 +264,17 @@
 		AD33C3AED2016EC393DC5391 /* ScrubberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrubberView.swift; sourceTree = "<group>"; };
 		AE0A1613AE5C22463AFD1229 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		AECF050766E247DD34B56B7F /* PlayerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerController.swift; sourceTree = "<group>"; };
+		B107BAA54E5E5CDE7D93DC56 /* MacNowPlayingPane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacNowPlayingPane.swift; sourceTree = "<group>"; };
 		B450CF1854EC52C7BAA219F2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		B48F2A1867125A583CF451F8 /* LocalNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotifications.swift; sourceTree = "<group>"; };
 		BE4375BED827A8C8CE0010D3 /* FileStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileStoreTests.swift; sourceTree = "<group>"; };
 		C2AEBAB68C200D62AC89483B /* FlatTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlatTextField.swift; sourceTree = "<group>"; };
 		C6F2E60DD1E395A8B7D1D5B3 /* OnDeviceYouTubeResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnDeviceYouTubeResolver.swift; sourceTree = "<group>"; };
 		C757CE830DED5400951CA0B9 /* DownloadJob+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DownloadJob+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		C876A0D51DE30DFD48E489C0 /* MacLibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacLibraryView.swift; sourceTree = "<group>"; };
 		CB85A5FBB6A0B628B1B43FDD /* AudioLib.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AudioLib.xcdatamodel; sourceTree = "<group>"; };
 		D0BC7633C3C850341AFB9B7A /* Book+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Book+CoreDataClass.swift"; sourceTree = "<group>"; };
+		D1E4761151C183B777137160 /* MacCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacCommands.swift; sourceTree = "<group>"; };
 		D228B1831B847A21F08A9949 /* DownloadTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadTabView.swift; sourceTree = "<group>"; };
 		D3402D44B8E670C4C4E7C31A /* AudioLibUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = AudioLibUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D39A7BBECA19F88EF6070C39 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -427,8 +439,20 @@
 				8B8CA74BF58D2E3D6F5241BF /* AudioLibApp.swift */,
 				D39A7BBECA19F88EF6070C39 /* ContentView.swift */,
 				1E251F08DD0301AA9C0D3614 /* MacRootView.swift */,
+				978B4CC62A14FB58BB7008F9 /* Mac */,
 			);
 			path = App;
+			sourceTree = "<group>";
+		};
+		978B4CC62A14FB58BB7008F9 /* Mac */ = {
+			isa = PBXGroup;
+			children = (
+				D1E4761151C183B777137160 /* MacCommands.swift */,
+				C876A0D51DE30DFD48E489C0 /* MacLibraryView.swift */,
+				B107BAA54E5E5CDE7D93DC56 /* MacNowPlayingPane.swift */,
+				5D26DBD5D35B04503187F480 /* MacPlayback.swift */,
+			);
+			path = Mac;
 			sourceTree = "<group>";
 		};
 		98389369ECF8EAE019737621 /* Resources */ = {
@@ -796,6 +820,10 @@
 				4B0D37197B300F446F998D39 /* LibraryRow.swift in Sources */,
 				D706E3392F902AC66205749E /* LibraryTabView.swift in Sources */,
 				DEC879CC4B7E84AE6623FB88 /* LocalNotifications.swift in Sources */,
+				9A09052DE9D37E4EBC6048CD /* MacCommands.swift in Sources */,
+				8C70085B4DC5B1F816CB603C /* MacLibraryView.swift in Sources */,
+				03B916C868D2C40169EAD65D /* MacNowPlayingPane.swift in Sources */,
+				3E23A06C3C9D471EA36E8867 /* MacPlayback.swift in Sources */,
 				B07CFF0238D109869656A4FD /* MacRootView.swift in Sources */,
 				24B8FE139F6DEC41A1E92F96 /* MiniPlayer.swift in Sources */,
 				F0DEB40A270436B0CCD4F7F7 /* NoteDoc+CoreDataClass.swift in Sources */,
@@ -875,6 +903,10 @@
 				FD4DB580374C3C54E8E95BB8 /* LibraryRow.swift in Sources */,
 				C540783255440E306251D2BC /* LibraryTabView.swift in Sources */,
 				1060F880300FF81391988921 /* LocalNotifications.swift in Sources */,
+				492EA7E4865C64AB3DC3F2B5 /* MacCommands.swift in Sources */,
+				0A8962C1519DE2A086AD7670 /* MacLibraryView.swift in Sources */,
+				4D951B35E25853330F8D4460 /* MacNowPlayingPane.swift in Sources */,
+				0E5C96FFDACE2AA3B2E94134 /* MacPlayback.swift in Sources */,
 				BD5D6858A9B94C282CC0483A /* MacRootView.swift in Sources */,
 				5189BDE76CF72DE8F6AB336A /* MiniPlayer.swift in Sources */,
 				81765940892FDC6C29E86029 /* NoteDoc+CoreDataClass.swift in Sources */,
