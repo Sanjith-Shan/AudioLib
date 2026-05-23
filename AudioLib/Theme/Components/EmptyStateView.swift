@@ -6,32 +6,42 @@ struct EmptyStateView: View {
     let subtitle: String
     var actionTitle: String? = nil
     var action: (() -> Void)? = nil
+    /// Size of the soft rounded icon container.
+    var circleSize: CGFloat = 84
 
     var body: some View {
-        VStack(spacing: Theme.Spacing.md) {
-            Image(systemName: iconName)
-                .font(.system(size: 48, weight: .light))
-                .foregroundStyle(Theme.Colors.coolGray)
-
-            VStack(spacing: Theme.Spacing.xs) {
-                Text(title)
-                    .font(.titleMd)
-                    .foregroundStyle(Theme.Colors.dark)
-                    .multilineTextAlignment(.center)
-
-                Text(subtitle)
-                    .font(.bodyRegular)
-                    .foregroundStyle(Theme.Colors.midSlate)
-                    .multilineTextAlignment(.center)
+        VStack(spacing: 0) {
+            ZStack {
+                RoundedRectangle(cornerRadius: circleSize * 0.29, style: .continuous)
+                    .fill(Theme.Colors.cardSoft)
+                    .frame(width: circleSize, height: circleSize)
+                Image(systemName: iconName)
+                    .font(.system(size: circleSize * 0.47, weight: .light))
+                    .foregroundStyle(Theme.Colors.inkMute)
             }
+            .padding(.bottom, 18)
+
+            Text(title)
+                .font(.serif(19, weight: .bold))
+                .foregroundStyle(Theme.Colors.ink)
+                .multilineTextAlignment(.center)
+
+            Text(subtitle)
+                .font(.ui(14))
+                .foregroundStyle(Theme.Colors.inkSoft)
+                .multilineTextAlignment(.center)
+                .lineSpacing(2)
+                .padding(.top, 6)
+                .frame(maxWidth: 260)
 
             if let actionTitle, let action {
                 PillButton(title: actionTitle, style: .primary, action: action)
-                    .padding(.top, Theme.Spacing.sm)
+                    .padding(.top, 22)
             }
         }
-        .padding(Theme.Spacing.xl)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding(.horizontal, Theme.Spacing.xl)
+        .padding(.top, 80)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
     }
 }
 
@@ -39,8 +49,9 @@ struct EmptyStateView: View {
     EmptyStateView(
         iconName: "books.vertical.fill",
         title: "Your Library",
-        subtitle: "Downloaded books will appear here",
-        actionTitle: "Download a book",
+        subtitle: "Downloaded audiobooks will appear here.",
+        actionTitle: "Download one",
         action: {}
     )
+    .background(Theme.Colors.paper)
 }

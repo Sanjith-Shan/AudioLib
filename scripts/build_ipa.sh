@@ -23,6 +23,25 @@ if [ -z "$TEAM_ID" ]; then
     exit 1
 fi
 
+# Ensure Xcode (not just Command Line Tools) is the active developer directory
+if ! xcodebuild -version &>/dev/null 2>&1; then
+    XCODE_DEV="/Applications/Xcode.app/Contents/Developer"
+    if [ -d "$XCODE_DEV" ]; then
+        echo "Switching xcode-select to Xcode.app (requires sudo)..."
+        sudo xcode-select -s "$XCODE_DEV"
+    else
+        echo "Error: Xcode.app not found. Install Xcode from the App Store."
+        exit 1
+    fi
+fi
+
+# Use xcpretty if available, otherwise plain output
+if command -v xcpretty &>/dev/null; then
+    PIPE="xcpretty"
+else
+    PIPE="cat"
+fi
+
 mkdir -p build
 
 echo "Archiving..."
@@ -31,34 +50,24 @@ xcodebuild archive \
     -scheme "$SCHEME" \
     -destination "generic/platform=iOS" \
     -archivePath "$ARCHIVE_PATH" \
+    -allowProvisioningUpdates \
+    -allowProvisioningDeviceRegistration \
     DEVELOPMENT_TEAM="$TEAM_ID" \
     CODE_SIGN_STYLE="Automatic" \
-    | xcpretty || true
+    | $PIPE
 
-# Generate export options
-cat > "$EXPORT_OPTIONS" << EOF
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-    <key>method</key>
-    <string>ad-hoc</string>
-    <key>teamID</key>
-    <string>${TEAM_ID}</string>
-    <key>compileBitcode</key>
-    <false/>
-    <key>thinning</key>
-    <string>&lt;none&gt;</string>
-</dict>
-</plist>
-EOF
-
-echo "Exporting IPA..."
-xcodebuild -exportArchive \
-    -archivePath "$ARCHIVE_PATH" \
-    -exportOptionsPlist "$EXPORT_OPTIONS" \
-    -exportPath "build/" \
-    | xcpretty || true
+echo "Packaging IPA from archive..."
+APP_PATH=$(find "$ARCHIVE_PATH/Products/Applications" -name "*.app" | head -1)
+if [ -z "$APP_PATH" ]; then
+    echo "Error: No .app found in archive"
+    exit 1
+fi
+PAYLOAD_DIR="build/Payload"
+rm -rf "$PAYLOAD_DIR"
+mkdir -p "$PAYLOAD_DIR"
+cp -r "$APP_PATH" "$PAYLOAD_DIR/"
+(cd build && zip -qr AudioLib.ipa Payload)
+rm -rf "$PAYLOAD_DIR"
 
 if [ -f "build/AudioLib.ipa" ]; then
     echo ""

@@ -1,8 +1,9 @@
 import SwiftUI
 
 enum PillButtonStyle {
-    case primary
-    case secondary
+    case primary    // ink bg, paper text — light-context CTA
+    case teal       // teal bg, white text — dark-context CTA
+    case secondary  // cardSoft bg, ink text
     case danger
     case ghost
 }
@@ -14,38 +15,36 @@ struct PillButton: View {
 
     private var backgroundColor: Color {
         switch style {
-        case .primary:   return Theme.Colors.dark
-        case .secondary: return Theme.Colors.surface
-        case .danger:    return Theme.Colors.danger
+        case .primary:   return Theme.Colors.ink
+        case .teal:      return Theme.Colors.teal
+        case .secondary: return Theme.Colors.cardSoft
+        case .danger:    return Theme.Colors.red
         case .ghost:     return Color.clear
         }
     }
 
     private var foregroundColor: Color {
         switch style {
-        case .primary:   return Theme.Colors.white
-        case .secondary: return Theme.Colors.dark
-        case .danger:    return Theme.Colors.white
-        case .ghost:     return Theme.Colors.dark
+        case .primary:   return Theme.Colors.paperFg
+        case .teal:      return .white
+        case .secondary: return Theme.Colors.ink
+        case .danger:    return .white
+        case .ghost:     return Theme.Colors.ink
         }
-    }
-
-    private var hasBorder: Bool {
-        style == .ghost
     }
 
     var body: some View {
         Button(action: action) {
             Text(title)
-                .font(.bodySemibold)
+                .font(.ui(15, weight: .semibold))
                 .foregroundStyle(foregroundColor)
                 .padding(.vertical, Theme.Button.paddingV)
                 .padding(.horizontal, Theme.Button.paddingH)
                 .background(backgroundColor)
-                .clipShape(Capsule())
+                .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.button, style: .continuous))
                 .overlay(
-                    hasBorder
-                        ? Capsule().stroke(Theme.Colors.dark, lineWidth: 2)
+                    style == .ghost
+                        ? RoundedRectangle(cornerRadius: Theme.Radius.button).stroke(Theme.Colors.ink, lineWidth: 1.5)
                         : nil
                 )
         }
@@ -56,9 +55,10 @@ struct PillButton: View {
 #Preview {
     VStack(spacing: Theme.Spacing.md) {
         PillButton(title: "Primary", style: .primary) {}
+        PillButton(title: "Teal", style: .teal) {}
         PillButton(title: "Secondary", style: .secondary) {}
         PillButton(title: "Danger", style: .danger) {}
-        PillButton(title: "Ghost", style: .ghost) {}
     }
     .padding()
+    .background(Theme.Colors.paper)
 }

@@ -20,14 +20,18 @@ struct FileStore {
         audioDir.appendingPathComponent("\(bookID.uuidString).m4a")
     }
 
+    static func audioURL(for bookID: UUID, fileExtension: String) -> URL {
+        audioDir.appendingPathComponent("\(bookID.uuidString).\(fileExtension)")
+    }
+
     static func artURL(for bookID: UUID) -> URL {
         artDir.appendingPathComponent("\(bookID.uuidString).jpg")
     }
 
     /// Atomically move a temp download file to its final audio destination.
     @discardableResult
-    static func moveAudio(from tempURL: URL, bookID: UUID) throws -> URL {
-        let dest = audioURL(for: bookID)
+    static func moveAudio(from tempURL: URL, bookID: UUID, fileExtension: String = "m4a") throws -> URL {
+        let dest = audioURL(for: bookID, fileExtension: fileExtension)
         if FileManager.default.fileExists(atPath: dest.path) {
             try FileManager.default.removeItem(at: dest)
         }
@@ -46,9 +50,21 @@ struct FileStore {
         return dest
     }
 
+    /// Returns true if any audio file exists locally for this book.
+    static func hasAudioFile(for bookID: UUID) -> Bool {
+        for ext in ["m4a", "webm", "opus"] {
+            if FileManager.default.fileExists(atPath: audioURL(for: bookID, fileExtension: ext).path) {
+                return true
+            }
+        }
+        return false
+    }
+
     /// Delete both audio and art files for a book.
     static func deleteBook(id: UUID) {
-        try? FileManager.default.removeItem(at: audioURL(for: id))
+        for ext in ["m4a", "webm", "opus"] {
+            try? FileManager.default.removeItem(at: audioURL(for: id, fileExtension: ext))
+        }
         try? FileManager.default.removeItem(at: artURL(for: id))
     }
 }

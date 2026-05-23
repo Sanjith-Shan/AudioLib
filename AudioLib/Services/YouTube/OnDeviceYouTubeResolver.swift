@@ -22,24 +22,23 @@ actor OnDeviceYouTubeResolver: YouTubeResolver {
         // Filter to audio-only streams
         let audioOnlyStreams = streams.filter { $0.includesAudioTrack && !$0.includesVideoTrack }
 
-        // Prefer AAC/m4a (mp4a codec) streams
-        let aacStreams = audioOnlyStreams.filter { stream in
-            if case .mp4a = stream.audioCodec { return true }
-            return false
-        }
+        // Prefer m4a over webm/opus. AVAudioPlayer can play partially-written m4a files
+        // (moov atom is at the front, audio payload follows), enabling instant-playback
+        // via ProgressiveDownloadManager. webm's seek tables make partial playback unreliable.
+        let m4aStreams = audioOnlyStreams.filter { $0.fileExtension == .m4a }
+        let selectedStream: YouTubeKit.Stream? =
+            lowestBitrateStream(from: m4aStreams) ?? lowestBitrateStream(from: audioOnlyStreams)
 
-        let selectedStream: YouTubeKit.Stream
-        if let best = bestStream(from: aacStreams) {
-            selectedStream = best
-        } else if let best = bestStream(from: audioOnlyStreams) {
-            // Only opus/webm available — we don't transcode on device
-            _ = best
-            throw YouTubeResolverError.noAudioStream
-        } else {
+        guard let selectedStream else {
             throw YouTubeResolverError.noAudioStream
         }
 
-        let fileExt = selectedStream.fileExtension == .m4a ? "m4a" : selectedStream.fileExtension.rawValue
+        let fileExt: String
+        switch selectedStream.fileExtension {
+        case .m4a:  fileExt = "m4a"
+        case .webm: fileExt = "webm"
+        default:    fileExt = selectedStream.fileExtension.rawValue
+        }
 
         // Fetch metadata (title, description, thumbnail)
         let ytMetadata = try? await yt.metadata
@@ -68,11 +67,10 @@ actor OnDeviceYouTubeResolver: YouTubeResolver {
         )
     }
 
-    // Pick the stream with the highest bitrate
-    private func bestStream(from streams: [YouTubeKit.Stream]) -> YouTubeKit.Stream? {
-        streams.max {
-            let lhs = $0.averageBitrate ?? $0.bitrate ?? 0
-            let rhs = $1.averageBitrate ?? $1.bitrate ?? 0
+    private func lowestBitrateStream(from streams: [YouTubeKit.Stream]) -> YouTubeKit.Stream? {
+        streams.min {
+            let lhs = $0.averageBitrate ?? $0.bitrate ?? Int.max
+            let rhs = $1.averageBitrate ?? $1.bitrate ?? Int.max
             return lhs < rhs
         }
     }

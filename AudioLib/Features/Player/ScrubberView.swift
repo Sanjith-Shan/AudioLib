@@ -11,7 +11,7 @@ struct ScrubberView: View {
     private var displayTime: Double { isDragging ? dragTime : currentTime }
 
     var body: some View {
-        VStack(spacing: Theme.Spacing.xs) {
+        VStack(spacing: 6) {
             Slider(
                 value: Binding(
                     get: { isDragging ? (duration > 0 ? dragTime / duration : 0) : (duration > 0 ? currentTime / duration : 0) },
@@ -28,17 +28,15 @@ struct ScrubberView: View {
                     }
                 }
             )
-            .tint(Theme.Colors.teal)
+            .tint(.white)
 
             HStack {
                 Text(DurationFormatter.format(seconds: displayTime))
-                    .font(.captionSmall)
-                    .foregroundStyle(Theme.Colors.white.opacity(0.6))
                 Spacer()
                 Text("-\(DurationFormatter.format(seconds: max(0, duration - displayTime)))")
-                    .font(.captionSmall)
-                    .foregroundStyle(Theme.Colors.white.opacity(0.6))
             }
+            .font(.mono(11))
+            .foregroundStyle(Theme.Colors.dInkMute)
         }
     }
 }

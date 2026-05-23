@@ -1,9 +1,12 @@
 import Foundation
 import AVFoundation
 import MediaPlayer
+#if os(iOS)
+import UIKit
+#endif
 
 @Observable
-class PlayerController {
+class PlayerController: NSObject {
     static let shared = PlayerController()
 
     // State
@@ -19,9 +22,48 @@ class PlayerController {
     private var progressTimer: Timer?
     private var sleepTimer: Timer?
     private var lastSaveTime: Date = .distantPast
+    private var cachedArtwork: MPMediaItemArtwork?
+    private var cachedArtworkBookID: UUID?
 
-    private init() {
+    private override init() {
+        super.init()
         setupRemoteCommands()
+        setupAudioSessionObservers()
+    }
+
+    // Plays an m4a file whose moov atom is already written but whose audio payload
+    // is still being filled in by ProgressiveDownloadManager. AVAudioPlayer reads
+    // sequentially so it will happily keep reading past its original end offset as
+    // new bytes arrive on disk.
+    func playFromPartialFile(book: Book, partialURL: URL, expectedDuration: Double) {
+        stop()
+        currentBook = book
+        duration = expectedDuration > 0 ? expectedDuration : book.durationSeconds
+        playbackRate = book.playbackRate
+
+        if cachedArtworkBookID != book.id {
+            cachedArtwork = nil
+            cachedArtworkBookID = book.id
+            if let artURL = book.artURL,
+               FileManager.default.fileExists(atPath: artURL.path),
+               let image = PlatformImage(contentsOfFile: artURL.path) {
+                cachedArtwork = MPMediaItemArtwork(boundsSize: image.size) { _ in image.platformUIImage }
+            }
+        }
+
+        guard FileManager.default.fileExists(atPath: partialURL.path) else { return }
+
+        do {
+            player = try AVAudioPlayer(contentsOf: partialURL)
+            player?.delegate = self
+            player?.enableRate = true
+            player?.prepareToPlay()
+            player?.currentTime = book.progressSeconds
+            updateNowPlayingInfo()
+            play()
+        } catch {
+            print("Failed to load partial audio: \(error)")
+        }
     }
 
     func load(book: Book) {
@@ -30,15 +72,25 @@ class PlayerController {
         duration = book.durationSeconds
         playbackRate = book.playbackRate
 
+        if cachedArtworkBookID != book.id {
+            cachedArtwork = nil
+            cachedArtworkBookID = book.id
+            if let artURL = book.artURL,
+               FileManager.default.fileExists(atPath: artURL.path),
+               let image = PlatformImage(contentsOfFile: artURL.path) {
+                cachedArtwork = MPMediaItemArtwork(boundsSize: image.size) { _ in image.platformUIImage }
+            }
+        }
+
         let url = book.audioURL
         guard FileManager.default.fileExists(atPath: url.path) else { return }
 
         do {
             player = try AVAudioPlayer(contentsOf: url)
+            player?.delegate = self
             player?.enableRate = true
             player?.prepareToPlay()
             player?.currentTime = book.progressSeconds
-            player?.rate = book.playbackRate
             updateNowPlayingInfo()
         } catch {
             print("Failed to load audio: \(error)")
@@ -46,8 +98,12 @@ class PlayerController {
     }
 
     func play() {
-        player?.rate = playbackRate
+        // Activate the audio session lazily, right before playback actually
+        // begins. This avoids the iOS 26 `NSOSStatusErrorDomain -50` that can
+        // fire when activating at app launch.
+        AudioSessionManager.shared.activate()
         player?.play()
+        player?.rate = playbackRate  // must be set AFTER play() or it resets to 1.0
         isPlaying = true
         startProgressTimer()
         updateNowPlayingInfo()
@@ -66,8 +122,10 @@ class PlayerController {
     }
 
     func seek(to time: Double) {
-        player?.currentTime = max(0, min(duration, time))
-        currentTime = player?.currentTime ?? time
+        let effective = player != nil ? player!.duration : duration
+        let clamped = max(0, min(effective > 0 ? effective : duration, time))
+        player?.currentTime = clamped
+        currentTime = player?.currentTime ?? clamped
         saveProgress()
         updateNowPlayingInfo()
     }
@@ -97,6 +155,10 @@ class PlayerController {
         player = nil
         isPlaying = false
         stopProgressTimer()
+        sleepTimer?.invalidate()
+        sleepTimer = nil
+        isSleepTimerActive = false
+        sleepTimerEndDate = nil
         saveProgress()
     }
 
@@ -127,6 +189,7 @@ class PlayerController {
         bookmark.createdAt = Date()
         bookmark.book = book
         try? context.save()
+        Haptics.success()
     }
 
     // MARK: - Progress persistence
@@ -137,7 +200,6 @@ class PlayerController {
             guard let self = self else { return }
             self.currentTime = self.player?.currentTime ?? 0
 
-            // Save every 5 seconds
             if Date().timeIntervalSince(self.lastSaveTime) >= 5 {
                 self.saveProgress()
             }
@@ -153,7 +215,27 @@ class PlayerController {
         guard let book = currentBook else { return }
         lastSaveTime = Date()
         book.progressSeconds = currentTime
+        book.lastPlayedAt = Date()
         try? PersistenceController.shared.container.viewContext.save()
+
+        let bookID = book.id
+        let progress = currentTime
+        let title = book.title
+        let sourceURL = book.sourceURL
+        let duration = book.durationSeconds
+        let audioFilename = book.audioFilename
+        let artFilename = book.artFilename
+        Task {
+            await SyncService.shared.pushProgress(
+                bookID: bookID,
+                progressSeconds: progress,
+                title: title,
+                sourceURL: sourceURL,
+                durationSeconds: duration,
+                audioFilename: audioFilename,
+                artFilename: artFilename
+            )
+        }
     }
 
     // MARK: - Now Playing Info
@@ -173,11 +255,8 @@ class PlayerController {
             MPNowPlayingInfoPropertyDefaultPlaybackRate: Double(playbackRate)
         ]
 
-        // Album art
-        if let artURL = book.artURL,
-           FileManager.default.fileExists(atPath: artURL.path),
-           let image = UIImage(contentsOfFile: artURL.path) {
-            info[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(boundsSize: image.size) { _ in image }
+        if let artwork = cachedArtwork {
+            info[MPMediaItemPropertyArtwork] = artwork
         }
 
         MPNowPlayingInfoCenter.default().nowPlayingInfo = info
@@ -207,6 +286,7 @@ class PlayerController {
         center.skipBackwardCommand.addTarget { [weak self] _ in
             self?.skipBackward(); return .success
         }
+        center.changePlaybackPositionCommand.isEnabled = true
         center.changePlaybackPositionCommand.addTarget { [weak self] event in
             guard let e = event as? MPChangePlaybackPositionCommandEvent else { return .commandFailed }
             self?.seek(to: e.positionTime)
@@ -217,6 +297,77 @@ class PlayerController {
             guard let e = event as? MPChangePlaybackRateCommandEvent else { return .commandFailed }
             self?.setRate(Float(e.playbackRate))
             return .success
+        }
+    }
+
+    // MARK: - Audio Session Observers
+
+    private func setupAudioSessionObservers() {
+        #if os(iOS)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleInterruption),
+            name: AVAudioSession.interruptionNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleRouteChange),
+            name: AVAudioSession.routeChangeNotification,
+            object: nil
+        )
+        #endif
+    }
+
+    #if os(iOS)
+    @objc private func handleInterruption(_ notification: Notification) {
+        guard let info = notification.userInfo,
+              let typeValue = info[AVAudioSessionInterruptionTypeKey] as? UInt,
+              let type = AVAudioSession.InterruptionType(rawValue: typeValue) else { return }
+
+        if type == .began {
+            if isPlaying { pause() }
+        } else if type == .ended {
+            let opts = AVAudioSession.InterruptionOptions(
+                rawValue: info[AVAudioSessionInterruptionOptionKey] as? UInt ?? 0
+            )
+            if opts.contains(.shouldResume) { play() }
+        }
+    }
+
+    @objc private func handleRouteChange(_ notification: Notification) {
+        guard let info = notification.userInfo,
+              let reasonValue = info[AVAudioSessionRouteChangeReasonKey] as? UInt,
+              let reason = AVAudioSession.RouteChangeReason(rawValue: reasonValue),
+              reason == .oldDeviceUnavailable else { return }
+
+        let prev = info[AVAudioSessionRouteChangePreviousRouteKey] as? AVAudioSessionRouteDescription
+        let wasHeadphones = prev?.outputs.first.map {
+            $0.portType == .headphones || $0.portType == .bluetoothA2DP || $0.portType == .bluetoothLE
+        } ?? false
+
+        if wasHeadphones && isPlaying {
+            DispatchQueue.main.async { [weak self] in self?.pause() }
+        }
+    }
+    #endif
+}
+
+// MARK: - AVAudioPlayerDelegate
+
+extension PlayerController: AVAudioPlayerDelegate {
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            self.isPlaying = false
+            self.stopProgressTimer()
+            // Reset to beginning so tapping play restarts
+            self.currentTime = 0
+            if let book = self.currentBook {
+                book.progressSeconds = 0
+                try? PersistenceController.shared.container.viewContext.save()
+            }
+            self.updateNowPlayingInfo()
         }
     }
 }

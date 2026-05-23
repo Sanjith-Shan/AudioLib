@@ -10,60 +10,88 @@ struct PlayerSecondaryRow: View {
     @State private var player = PlayerController.shared
 
     var body: some View {
-        HStack(spacing: Theme.Spacing.xl) {
-            // Speed
-            Button {
+        HStack(alignment: .top) {
+            secondaryButton(label: "Speed", active: false) {
                 showingSpeedSheet = true
-            } label: {
-                Text("\(speedLabel)x")
-                    .font(.bodySemibold)
-                    .foregroundStyle(Theme.Colors.white)
-                    .frame(width: 48, height: 32)
-                    .background(Theme.Colors.white.opacity(0.1))
-                    .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.cardSmall))
+            } icon: {
+                Text("\(speedLabel)×")
+                    .font(.ui(14, weight: .bold))
             }
-            .buttonStyle(.plain)
 
-            // Sleep timer
-            Button { showingSleepSheet = true } label: {
-                Image(systemName: player.isSleepTimerActive ? "moon.fill" : "moon")
-                    .font(.system(size: 22))
-                    .foregroundStyle(player.isSleepTimerActive ? Theme.Colors.teal : Theme.Colors.white)
-            }
-            .buttonStyle(.plain)
+            Spacer()
 
-            // Bookmark
-            Button { player.addBookmark() } label: {
-                Image(systemName: "bookmark")
-                    .font(.system(size: 22))
-                    .foregroundStyle(Theme.Colors.white)
-            }
-            .buttonStyle(.plain)
+            sleepButton
 
-            // Chapters (only if available)
+            Spacer()
+
             if hasChapters {
-                Button { showingChapters = true } label: {
+                secondaryButton(label: "Chapters", active: false) {
+                    showingChapters = true
+                } icon: {
                     Image(systemName: "list.bullet")
-                        .font(.system(size: 22))
-                        .foregroundStyle(Theme.Colors.white)
+                        .font(.system(size: 20, weight: .regular))
                 }
-                .buttonStyle(.plain)
+                Spacer()
             }
 
-            // All bookmarks
-            Button { showingBookmarks = true } label: {
-                Image(systemName: "bookmark.fill")
-                    .font(.system(size: 22))
-                    .foregroundStyle(Theme.Colors.white)
+            secondaryButton(label: "Marks", active: false) {
+                showingBookmarks = true
+            } icon: {
+                Image(systemName: "bookmark")
+                    .font(.system(size: 18, weight: .regular))
             }
-            .buttonStyle(.plain)
         }
         .padding(.horizontal, Theme.Spacing.lg)
+        .padding(.bottom, 36)
+    }
+
+    // Sleep timer button with live countdown.
+    private var sleepButton: some View {
+        TimelineView(.periodic(from: .now, by: 1)) { _ in
+            let active = player.isSleepTimerActive
+            let label = active ? countdownLabel : "Sleep"
+            secondaryButton(label: label, active: active) {
+                showingSleepSheet = true
+            } icon: {
+                Image(systemName: active ? "moon.fill" : "moon")
+                    .font(.system(size: 18, weight: .regular))
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func secondaryButton<Icon: View>(
+        label: String,
+        active: Bool,
+        action: @escaping () -> Void,
+        @ViewBuilder icon: () -> Icon
+    ) -> some View {
+        Button(action: action) {
+            VStack(spacing: 5) {
+                icon()
+                    .foregroundStyle(active ? Theme.Colors.teal : Theme.Colors.dInkSoft)
+                    .frame(width: 44, height: 32)
+                    .background(active ? Theme.Colors.teal.opacity(0.2) : Color.white.opacity(0.06))
+                    .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+
+                Text(label)
+                    .font(.mono(10.5))
+                    .foregroundStyle(active ? Theme.Colors.teal : Theme.Colors.dInkMute)
+            }
+            .frame(minWidth: 56)
+        }
+        .buttonStyle(.plain)
     }
 
     private var speedLabel: String {
         let rate = player.playbackRate
         if rate == Float(Int(rate)) { return "\(Int(rate))" }
-        return String(format: "%.2g", rate)
+        return String(format: "%g", rate)
+    }
+
+    private var countdownLabel: String {
+        guard let end = player.sleepTimerEndDate else { return "Sleep" }
+        let remaining = max(0, Int(end.timeIntervalSinceNow))
+        return String(format: "%d:%02d", remaining / 60, remaining % 60)
     }
 }

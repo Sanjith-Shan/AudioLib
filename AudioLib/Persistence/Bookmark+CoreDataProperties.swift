@@ -11,7 +11,7 @@ extension Bookmark {
     @NSManaged public var id: UUID
     @NSManaged public var note: String?
     @NSManaged public var timeSeconds: Double
-    @NSManaged public var book: Book
+    @NSManaged public var book: Book?
 
 }
 
