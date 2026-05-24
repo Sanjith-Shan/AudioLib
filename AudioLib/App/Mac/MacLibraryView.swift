@@ -5,6 +5,8 @@ import CoreData
 /// Desktop-native library: a resizable cover-art grid with hover-to-play,
 /// search, and sort — the Mac counterpart to the iPhone's LibraryTabView list.
 struct MacLibraryView: View {
+    var model: MacAppModel
+
     @FetchRequest(
         sortDescriptors: [
             NSSortDescriptor(keyPath: \Book.lastPlayedAt, ascending: false),

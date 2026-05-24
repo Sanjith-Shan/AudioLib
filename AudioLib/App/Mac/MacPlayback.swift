@@ -22,5 +22,29 @@ enum MacPlayback {
             player.load(book: book)
         }
     }
+
+    static func nextChapter() {
+        let player = PlayerController.shared
+        guard let chapters = player.currentBook?.chaptersArray, !chapters.isEmpty else { return }
+        if let next = chapters.first(where: { $0.startSeconds > player.currentTime + 1 }) {
+            player.seek(to: next.startSeconds)
+        }
+    }
+
+    static func previousChapter() {
+        let player = PlayerController.shared
+        guard let chapters = player.currentBook?.chaptersArray, !chapters.isEmpty else { return }
+        // back to start of current chapter, or previous if we're near the top
+        let priors = chapters.filter { $0.startSeconds < player.currentTime - 2 }
+        player.seek(to: priors.last?.startSeconds ?? 0)
+    }
+
+    /// "1.5×" / "2×" formatting for the speed pill.
+    static func rateLabel(_ rate: Float) -> String {
+        if rate.truncatingRemainder(dividingBy: 1) == 0 {
+            return "\(Int(rate))×"
+        }
+        return String(format: "%g×", rate)
+    }
 }
 #endif

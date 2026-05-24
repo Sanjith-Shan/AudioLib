@@ -2,109 +2,63 @@
 import SwiftUI
 import CoreData
 
-enum MacSidebarItem: String, CaseIterable, Identifiable {
-    case library = "Library"
-    case download = "Download"
-    case notes = "Notes"
-    case settings = "Settings"
-
-    var id: String { rawValue }
-
-    var systemImage: String {
-        switch self {
-        case .library:  return "books.vertical"
-        case .download: return "arrow.down.circle"
-        case .notes:    return "note.text"
-        case .settings: return "gearshape"
-        }
-    }
-}
-
+/// The main window shell: sidebar │ content (+ inspector) over a full-width
+/// bottom player bar, per the Mac design handoff.
 struct MacRootView: View {
     @Environment(\.managedObjectContext) private var context
+    @State private var model = MacAppModel.shared
     @State private var router = AppRouter.shared
     @State private var player = PlayerController.shared
-    @State private var selectedItem: MacSidebarItem? = .library
-    @State private var columnVisibility: NavigationSplitViewVisibility = .all
-    @State private var showInspector = true
 
     var body: some View {
-        NavigationSplitView(columnVisibility: $columnVisibility) {
-            List(MacSidebarItem.allCases, selection: $selectedItem) { item in
-                Label(item.rawValue, systemImage: item.systemImage)
-                    .tag(item)
-            }
-            .navigationTitle("AudioLib")
-            .listStyle(.sidebar)
-            .frame(minWidth: 180)
-        } detail: {
-            detailContent
-                .frame(minWidth: 520, minHeight: 480)
-                .inspector(isPresented: $showInspector) {
-                    MacNowPlayingPane()
-                        .inspectorColumnWidth(min: 280, ideal: 320, max: 420)
+        ZStack {
+            VStack(spacing: 0) {
+                HStack(spacing: 0) {
+                    if !model.sidebarCollapsed {
+                        MacSidebarView(model: model)
+                            .environment(\.managedObjectContext, context)
+                    }
+                    contentColumn
                 }
-                .toolbar { playbackToolbar }
+                if player.currentBook != nil {
+                    MacPlayerBar(model: model)
+                }
+            }
+
+            if model.showExpandedPlayer {
+                MacNowPlayingExpanded(model: model)
+                    .transition(.move(edge: .bottom))
+                    .zIndex(10)
+            }
         }
-        .frame(minWidth: 900, minHeight: 560)
+        .frame(minWidth: 1080, minHeight: 680)
         .environment(router)
-        .onChange(of: router.selectedTab) { _, newValue in
-            // Lets the Download empty-state CTA ("Go to Download") switch panes.
-            if newValue == 0 { selectedItem = .download }
-        }
+        .environment(model)
+        .animation(.easeOut(duration: 0.28), value: model.showExpandedPlayer)
     }
 
-    // MARK: - Detail
+    // MARK: - Content column
 
     @ViewBuilder
-    private var detailContent: some View {
-        switch selectedItem {
-        case .library, .none:
-            MacLibraryView()
-                .environment(router)
-                .environment(\.managedObjectContext, context)
-        case .download:
-            DownloadTabView()
-                .environment(router)
-                .environment(\.managedObjectContext, context)
-        case .notes:
-            NotesTabView()
-                .environment(router)
-                .environment(\.managedObjectContext, context)
-        case .settings:
-            SettingsView()
-                .environment(router)
-                .environment(\.managedObjectContext, context)
-        }
-    }
-
-    // MARK: - Playback toolbar
-
-    @ToolbarContentBuilder
-    private var playbackToolbar: some ToolbarContent {
-        ToolbarItemGroup(placement: .primaryAction) {
-            if player.currentBook != nil {
-                Button { player.skipBackward() } label: {
-                    Image(systemName: "gobackward.15")
-                }
-                .help("Skip back")
-
-                Button { player.togglePlayPause() } label: {
-                    Image(systemName: player.isPlaying ? "pause.fill" : "play.fill")
-                }
-                .help(player.isPlaying ? "Pause" : "Play")
-
-                Button { player.skipForward() } label: {
-                    Image(systemName: "goforward.15")
-                }
-                .help("Skip forward")
+    private var contentColumn: some View {
+        VStack(spacing: 0) {
+            switch model.selection.pane {
+            case .library:
+                MacLibraryView(model: model)
+                    .environment(router)
+                    .environment(\.managedObjectContext, context)
+            case .downloads:
+                MacDownloadsView()
+                    .environment(router)
+                    .environment(\.managedObjectContext, context)
+            case .notes:
+                MacNotesView(model: model)
+                    .environment(router)
+                    .environment(\.managedObjectContext, context)
             }
-
-            Button { showInspector.toggle() } label: {
-                Image(systemName: "sidebar.trailing")
-            }
-            .help("Toggle Now Playing")
         }
+        .frame(minWidth: 520, maxWidth: .infinity, maxHeight: .infinity)
+        .background(Theme.Colors.paper)
     }
 }
 #endif

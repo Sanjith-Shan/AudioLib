@@ -17,6 +17,9 @@ class PlayerController: NSObject {
     var playbackRate: Float = 1.0
     var isSleepTimerActive: Bool = false
     var sleepTimerEndDate: Date? = nil
+    var volume: Float = 1.0 {
+        didSet { player?.volume = volume }
+    }
 
     private var player: AVAudioPlayer?
     private var progressTimer: Timer?
@@ -57,6 +60,7 @@ class PlayerController: NSObject {
             player = try AVAudioPlayer(contentsOf: partialURL)
             player?.delegate = self
             player?.enableRate = true
+            player?.volume = volume
             player?.prepareToPlay()
             player?.currentTime = book.progressSeconds
             updateNowPlayingInfo()
@@ -89,6 +93,7 @@ class PlayerController: NSObject {
             player = try AVAudioPlayer(contentsOf: url)
             player?.delegate = self
             player?.enableRate = true
+            player?.volume = volume
             player?.prepareToPlay()
             player?.currentTime = book.progressSeconds
             updateNowPlayingInfo()

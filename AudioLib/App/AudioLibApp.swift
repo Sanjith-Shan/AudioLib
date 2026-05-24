@@ -27,6 +27,7 @@ struct AudioLibApp: App {
             #endif
         }
         #if os(macOS)
+        .windowStyle(.hiddenTitleBar)
         .commands {
             PlaybackCommands()
         }
