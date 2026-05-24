@@ -49,7 +49,8 @@ actor CompanionServerResolver: YouTubeResolver {
             thumbnailURL: thumbnailURL,
             audioStreamURL: audioStreamURL,
             fileExtension: decoded.fileExtension,
-            chapters: chapters
+            chapters: chapters,
+            downloadHeaders: decoded.httpHeaders ?? [:]
         )
     }
 }
@@ -65,6 +66,7 @@ private struct CompanionResponse: Decodable {
     let audioStreamURL: String
     let fileExtension: String
     let chapters: [ChapterResponse]
+    let httpHeaders: [String: String]?
 
     enum CodingKeys: String, CodingKey {
         case videoID = "videoID"
@@ -75,6 +77,7 @@ private struct CompanionResponse: Decodable {
         case audioStreamURL = "audioStreamURL"
         case fileExtension
         case chapters
+        case httpHeaders
     }
 }
 

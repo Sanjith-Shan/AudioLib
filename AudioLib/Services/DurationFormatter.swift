@@ -30,4 +30,16 @@ enum DurationFormatter {
     static func format(seconds: Double) -> String {
         string(from: seconds)
     }
+
+    /// Formats a duration in seconds as HH:MM:SS (or MM:SS if under an hour).
+    static func timestamp(seconds: Double) -> String {
+        let total = max(0, Int(seconds.rounded()))
+        let h = total / 3600
+        let m = (total % 3600) / 60
+        let s = total % 60
+        if h > 0 {
+            return String(format: "%d:%02d:%02d", h, m, s)
+        }
+        return String(format: "%02d:%02d", m, s)
+    }
 }

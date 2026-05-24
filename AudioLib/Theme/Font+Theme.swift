@@ -1,137 +1,65 @@
 import SwiftUI
+#if os(iOS)
+import UIKit
+#else
+import AppKit
+#endif
 
-// MARK: - Font static properties
+// MARK: - Design font helpers
+//
+// The design uses three families:
+//   • Georgia serif — book titles, large display, nav large titles
+//   • SF Pro (system) — all UI text
+//   • Monospace tabular — timestamps, durations, URLs, version
 
 extension Font {
-    /// AeonikPro-Medium 34pt — display heading
-    static var displayLg: Font {
-        if let _ = UIFont(name: "AeonikPro-Medium", size: 34) {
-            return .custom("AeonikPro-Medium", size: 34)
-        }
-        return .system(.largeTitle, design: .default).weight(.medium)
+    /// Georgia serif at an explicit size/weight (book titles, display headers).
+    static func serif(_ size: CGFloat, weight: Font.Weight = .bold) -> Font {
+        .custom("Georgia", size: size).weight(weight)
     }
 
-    /// AeonikPro-Medium 22pt — title large
-    static var titleLg: Font {
-        if let _ = UIFont(name: "AeonikPro-Medium", size: 22) {
-            return .custom("AeonikPro-Medium", size: 22)
-        }
-        return .system(.title2, design: .default).weight(.medium)
+    /// System (SF Pro) UI font at an explicit size/weight.
+    static func ui(_ size: CGFloat, weight: Font.Weight = .regular) -> Font {
+        .system(size: size, weight: weight)
     }
 
-    /// AeonikPro-Medium 17pt — title medium
-    static var titleMd: Font {
-        if let _ = UIFont(name: "AeonikPro-Medium", size: 17) {
-            return .custom("AeonikPro-Medium", size: 17)
-        }
-        return .system(.headline, design: .default).weight(.medium)
+    /// Monospaced system font with tabular figures (timestamps, durations).
+    static func mono(_ size: CGFloat, weight: Font.Weight = .regular) -> Font {
+        .system(size: size, weight: weight, design: .monospaced)
     }
 
-    /// Inter-Regular 16pt — body regular
-    static var bodyRegular: Font {
-        if let _ = UIFont(name: "Inter-Regular", size: 16) {
-            return .custom("Inter-Regular", size: 16)
-        }
-        return .system(.body, design: .default)
-    }
+    // MARK: - Named tokens (mapped onto the design scale)
 
-    /// Inter-SemiBold 16pt — body semibold
-    static var bodySemibold: Font {
-        if let _ = UIFont(name: "Inter-SemiBold", size: 16) {
-            return .custom("Inter-SemiBold", size: 16)
-        }
-        return .system(.body, design: .default).weight(.semibold)
-    }
+    /// Onboarding app name — Georgia 40 / bold.
+    static var displayLg: Font { .serif(34, weight: .bold) }
+    /// Large serif headers (nav titles) — Georgia 28 / bold.
+    static var serifTitle: Font { .serif(28, weight: .bold) }
+    /// Player / note titles — Georgia 24 / bold.
+    static var titleLg: Font { .serif(22, weight: .bold) }
+    /// Section / card headline — SF Pro 17 / semibold.
+    static var titleMd: Font { .ui(17, weight: .semibold) }
 
-    /// Inter-Regular 13pt — caption
-    static var caption: Font {
-        if let _ = UIFont(name: "Inter-Regular", size: 13) {
-            return .custom("Inter-Regular", size: 13)
-        }
-        return .system(.caption, design: .default)
-    }
+    /// Body — SF Pro 16 / regular.
+    static var bodyRegular: Font { .ui(16) }
+    /// Body emphasis — SF Pro 15 / semibold (row titles).
+    static var bodySemibold: Font { .ui(15, weight: .semibold) }
 
-    /// Inter-Regular 11pt — caption small
-    static var captionSmall: Font {
-        if let _ = UIFont(name: "Inter-Regular", size: 11) {
-            return .custom("Inter-Regular", size: 11)
-        }
-        return .system(.caption2, design: .default)
-    }
+    /// Caption — SF Pro 13 / regular (row secondary text).
+    static var caption: Font { .ui(13) }
+    /// Small caption — SF Pro 11.5 / regular.
+    static var captionSmall: Font { .ui(11.5) }
+    /// Uppercase section header — SF Pro 13 / semibold.
+    static var sectionHeader: Font { .ui(13, weight: .semibold) }
 }
 
-// MARK: - ViewModifier variants
-
-struct AudioLibDisplayLgModifier: ViewModifier {
-    func body(content: Content) -> some View {
-        content.font(.displayLg)
-    }
-}
-
-struct AudioLibTitleLgModifier: ViewModifier {
-    func body(content: Content) -> some View {
-        content.font(.titleLg)
-    }
-}
-
-struct AudioLibTitleMdModifier: ViewModifier {
-    func body(content: Content) -> some View {
-        content.font(.titleMd)
-    }
-}
-
-struct AudioLibBodyRegularModifier: ViewModifier {
-    func body(content: Content) -> some View {
-        content.font(.bodyRegular)
-    }
-}
-
-struct AudioLibBodySemiboldModifier: ViewModifier {
-    func body(content: Content) -> some View {
-        content.font(.bodySemibold)
-    }
-}
-
-struct AudioLibCaptionModifier: ViewModifier {
-    func body(content: Content) -> some View {
-        content.font(.caption)
-    }
-}
-
-struct AudioLibCaptionSmallModifier: ViewModifier {
-    func body(content: Content) -> some View {
-        content.font(.captionSmall)
-    }
-}
-
-// MARK: - View extensions
+// MARK: - View extensions (legacy convenience wrappers)
 
 extension View {
-    func audioLibDisplayLg() -> some View {
-        modifier(AudioLibDisplayLgModifier())
-    }
-
-    func audioLibTitleLg() -> some View {
-        modifier(AudioLibTitleLgModifier())
-    }
-
-    func audioLibTitleMd() -> some View {
-        modifier(AudioLibTitleMdModifier())
-    }
-
-    func audioLibBodyRegular() -> some View {
-        modifier(AudioLibBodyRegularModifier())
-    }
-
-    func audioLibBodySemibold() -> some View {
-        modifier(AudioLibBodySemiboldModifier())
-    }
-
-    func audioLibCaption() -> some View {
-        modifier(AudioLibCaptionModifier())
-    }
-
-    func audioLibCaptionSmall() -> some View {
-        modifier(AudioLibCaptionSmallModifier())
-    }
+    func audioLibDisplayLg() -> some View { font(.displayLg) }
+    func audioLibTitleLg() -> some View { font(.titleLg) }
+    func audioLibTitleMd() -> some View { font(.titleMd) }
+    func audioLibBodyRegular() -> some View { font(.bodyRegular) }
+    func audioLibBodySemibold() -> some View { font(.bodySemibold) }
+    func audioLibCaption() -> some View { font(.caption) }
+    func audioLibCaptionSmall() -> some View { font(.captionSmall) }
 }

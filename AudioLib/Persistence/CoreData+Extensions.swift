@@ -10,9 +10,11 @@ extension Book {
         return min(progressSeconds / durationSeconds, 1.0)
     }
 
-    /// URL to the audio file managed by FileStore.
+    /// URL to the audio file managed by FileStore. Respects the actual recorded
+    /// file extension so webm/opus books resolve correctly.
     var audioURL: URL {
-        FileStore.audioURL(for: id)
+        let ext = (audioFilename as NSString?)?.pathExtension ?? "m4a"
+        return FileStore.audioURL(for: id, fileExtension: ext.isEmpty ? "m4a" : ext)
     }
 
     /// URL to the cover art file managed by FileStore, or nil if no art has been downloaded.

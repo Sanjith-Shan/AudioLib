@@ -11,7 +11,7 @@ extension Chapter {
     @NSManaged public var id: UUID
     @NSManaged public var startSeconds: Double
     @NSManaged public var title: String
-    @NSManaged public var book: Book
+    @NSManaged public var book: Book?
 
 }
 

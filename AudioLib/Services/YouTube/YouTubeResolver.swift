@@ -10,6 +10,8 @@ struct YTMetadata {
     let audioStreamURL: URL
     let fileExtension: String  // "m4a" or "webm"
     let chapters: [YTChapter]
+    // Extra HTTP headers the resolver needs applied to the download request (e.g. from yt-dlp)
+    var downloadHeaders: [String: String] = [:]
 }
 
 struct YTChapter {

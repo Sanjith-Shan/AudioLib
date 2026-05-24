@@ -4,6 +4,7 @@ import CoreData
 struct MiniPlayer: View {
     @Environment(AppRouter.self) private var router
     @Environment(\.managedObjectContext) private var context
+    @State private var player = PlayerController.shared
 
     private var currentBook: Book? {
         guard let id = router.currentBookID else { return nil }
@@ -15,41 +16,61 @@ struct MiniPlayer: View {
 
     var body: some View {
         if let book = currentBook, !router.showingPlayer {
-            HStack(spacing: Theme.Spacing.md) {
-                CoverArtView(book: book, size: 40, cornerRadius: 8)
+            VStack(spacing: 0) {
+                HStack(spacing: 10) {
+                    CoverArtView(book: book, size: 42, cornerRadius: 8)
 
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(book.title)
-                        .font(.bodySemibold)
-                        .foregroundStyle(Theme.Colors.white)
-                        .lineLimit(1)
-                    if let author = book.author {
-                        Text(author)
-                            .font(.caption)
-                            .foregroundStyle(Theme.Colors.white.opacity(0.7))
+                    VStack(alignment: .leading, spacing: 1) {
+                        Text(book.title)
+                            .font(.ui(13, weight: .semibold))
+                            .foregroundStyle(Theme.Colors.paperFg)
                             .lineLimit(1)
+                        if let author = book.author {
+                            Text(author)
+                                .font(.ui(11.5))
+                                .foregroundStyle(Theme.Colors.paperFg.opacity(0.55))
+                                .lineLimit(1)
+                        }
                     }
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
 
-                Button {
-                    PlayerController.shared.togglePlayPause()
-                } label: {
-                    Image(systemName: PlayerController.shared.isPlaying ? "pause.fill" : "play.fill")
-                        .font(.system(size: 20))
-                        .foregroundStyle(Theme.Colors.white)
-                        .frame(width: 44, height: 44)
+                    Button {
+                        player.togglePlayPause()
+                    } label: {
+                        Image(systemName: player.isPlaying ? "pause.fill" : "play.fill")
+                            .font(.system(size: 16))
+                            .foregroundStyle(Theme.Colors.paperFg)
+                            .frame(width: 34, height: 34)
+                            .background(Color.white.opacity(0.12))
+                            .clipShape(Circle())
+                            .contentShape(Rectangle())
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel(player.isPlaying ? "Pause" : "Play")
                 }
-                .buttonStyle(.plain)
+                .padding(.horizontal, 10)
+                .padding(.vertical, 8)
+
+                // hairline progress along bottom inset
+                ProgressBarView(
+                    value: book.progressFraction,
+                    height: 2,
+                    color: Theme.Colors.teal,
+                    track: Color.white.opacity(0.08)
+                )
+                .padding(.horizontal, 12)
+                .padding(.bottom, 2)
             }
-            .padding(.horizontal, Theme.Spacing.md)
-            .padding(.vertical, Theme.Spacing.sm)
-            .background(Theme.Colors.dark)
-            .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.cardSmall))
+            .background(Theme.Colors.ink)
+            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+            .shadow(color: Color(hex: 0x1B1814, opacity: 0.22), radius: 22, y: 6)
             .padding(.horizontal, Theme.Spacing.sm)
+            .contentShape(RoundedRectangle(cornerRadius: 16))
             .onTapGesture {
                 router.showingPlayer = true
             }
+            .accessibilityElement(children: .contain)
+            .accessibilityHint("Tap to open the full player")
         }
     }
 }

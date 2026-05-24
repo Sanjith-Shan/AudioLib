@@ -1,40 +1,38 @@
+#if os(iOS)
 import SwiftUI
 import CoreData
 
 struct ContentView: View {
+    @Environment(\.managedObjectContext) private var context
     @State private var router = AppRouter.shared
     @AppStorage("audiolib.hasOnboarded") private var hasOnboarded = false
     @State private var showOnboarding = false
 
     var body: some View {
-        ZStack(alignment: .bottom) {
-            TabView(selection: Bindable(router).selectedTab) {
-                DownloadTabView()
-                    .tabItem { Label("Download", systemImage: "arrow.down.circle") }
-                    .tag(0)
-
-                LibraryTabView()
-                    .tabItem { Label("Library", systemImage: "books.vertical") }
-                    .tag(1)
-
-                NotesTabView()
-                    .tabItem { Label("Notes", systemImage: "note.text") }
-                    .tag(2)
-            }
-            .tint(Theme.Colors.blue)
-            .sheet(isPresented: Bindable(router).showingPlayer) {
-                if let bookID = router.currentBookID,
-                   let book = fetchBook(id: bookID) {
-                    PlayerView(book: book)
-                        .environment(router)
-                }
-            }
-
-            // MiniPlayer above tab bar
-            VStack(spacing: 0) {
-                MiniPlayer()
+        TabView(selection: Bindable(router).selectedTab) {
+            DownloadTabView()
+                .tabItem { Label("Download", systemImage: "arrow.down.circle") }
+                .tag(0)
+            LibraryTabView()
+                .tabItem { Label("Library", systemImage: "books.vertical") }
+                .tag(1)
+            NotesTabView()
+                .tabItem { Label("Notes", systemImage: "note.text") }
+                .tag(2)
+        }
+        .tint(Theme.Colors.teal)
+        .background(Theme.Colors.paper, ignoresSafeAreaEdges: .all)
+        .safeAreaInset(edge: .bottom, spacing: 0) {
+            MiniPlayer()
+                .environment(router)
+                .environment(\.managedObjectContext, context)
+        }
+        .sheet(isPresented: Bindable(router).showingPlayer) {
+            if let bookID = router.currentBookID,
+               let book = fetchBook(id: bookID) {
+                PlayerView(book: book)
                     .environment(router)
-                Spacer().frame(height: 49 + safeAreaBottom)
+                    .environment(\.managedObjectContext, context)
             }
         }
         .environment(router)
@@ -44,14 +42,7 @@ struct ContentView: View {
         }
     }
 
-    private var safeAreaBottom: CGFloat {
-        UIApplication.shared.connectedScenes
-            .compactMap { $0 as? UIWindowScene }
-            .first?.windows.first?.safeAreaInsets.bottom ?? 0
-    }
-
     private func fetchBook(id: UUID) -> Book? {
-        let context = PersistenceController.shared.container.viewContext
         let req = NSFetchRequest<Book>(entityName: "Book")
         req.predicate = NSPredicate(format: "id == %@", id as CVarArg)
         req.fetchLimit = 1
@@ -63,3 +54,4 @@ struct ContentView: View {
     ContentView()
         .environment(\.managedObjectContext, PersistenceController(inMemory: true).container.viewContext)
 }
+#endif

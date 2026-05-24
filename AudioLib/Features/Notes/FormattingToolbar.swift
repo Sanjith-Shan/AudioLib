@@ -1,10 +1,11 @@
+#if os(iOS)
 import UIKit
 
 class FormattingToolbar: UIToolbar {
     weak var textView: UITextView?
 
     init(textView: UITextView) {
-        super.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 44))
+        super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 44))
         self.textView = textView
         setupItems()
     }
@@ -22,11 +23,40 @@ class FormattingToolbar: UIToolbar {
         let bullet = makeButton(title: "•", action: #selector(didTapBullet))
         let numbered = makeButton(title: "1.", action: #selector(didTapNumbered))
         let clear = makeButton(title: "Clear", action: #selector(didTapClear))
+        let timestamp = UIBarButtonItem(
+            image: UIImage(systemName: "clock"),
+            style: .plain,
+            target: self,
+            action: #selector(didTapTimestamp)
+        )
+        timestamp.tintColor = UIColor(red: 0x1E/255, green: 0x90/255, blue: 0x85/255, alpha: 1)
+        timestamp.isEnabled = PlayerController.shared.currentBook != nil
+        self.timestampItem = timestamp
         let flex = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let done = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(dismissKeyboard))
-        done.tintColor = UIColor(red: 0x49/255, green: 0x4F/255, blue: 0xDF/255, alpha: 1)
+        done.tintColor = UIColor(red: 0x1E/255, green: 0x90/255, blue: 0x85/255, alpha: 1)
 
-        items = [bold, italic, underline, flex, h1, h2, flex, bullet, numbered, flex, clear, flex, done]
+        items = [bold, italic, underline, flex, h1, h2, flex, bullet, numbered, flex, timestamp, flex, clear, flex, done]
+    }
+
+    private var timestampItem: UIBarButtonItem?
+
+    @objc private func didTapTimestamp() {
+        guard let tv = textView, let book = PlayerController.shared.currentBook else { return }
+        let title = book.title
+        let stamp = DurationFormatter.timestamp(seconds: PlayerController.shared.currentTime)
+        let text = "[\(title) @ \(stamp)]\n"
+
+        let defaultFont = UIFont(name: "Inter-Regular", size: 16) ?? UIFont.systemFont(ofSize: 16)
+        let insertion = NSAttributedString(string: text, attributes: [
+            .font: defaultFont,
+            .foregroundColor: UIColor.black
+        ])
+        let range = tv.selectedRange
+        let attrStr = NSMutableAttributedString(attributedString: tv.attributedText)
+        attrStr.replaceCharacters(in: range, with: insertion)
+        tv.attributedText = attrStr
+        tv.selectedRange = NSRange(location: range.location + (text as NSString).length, length: 0)
     }
 
     private func makeButton(title: String, bold: Bool = false, italic: Bool = false, underline: Bool = false, action: Selector) -> UIBarButtonItem {
@@ -87,7 +117,17 @@ class FormattingToolbar: UIToolbar {
     }
 
     @objc private func didTapNumbered() {
-        insertListPrefix("1. ")
+        guard let tv = textView else { return }
+        let text = tv.text as NSString
+        let lineRange = text.lineRange(for: tv.selectedRange)
+        let lineStart = lineRange.location
+
+        // Count existing numbered items above the cursor to determine next number
+        let preceding = text.substring(to: lineStart)
+        let existingCount = preceding.components(separatedBy: "\n")
+            .filter { $0.range(of: "^\\d+\\. ", options: .regularExpression) != nil }
+            .count
+        insertListPrefix("\(existingCount + 1). ")
     }
 
     @objc private func didTapClear() {
@@ -179,3 +219,4 @@ class FormattingToolbar: UIToolbar {
         tv.selectedRange = NSRange(location: range.location + prefix.count, length: range.length)
     }
 }
+#endif
