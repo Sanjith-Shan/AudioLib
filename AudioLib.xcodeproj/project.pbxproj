@@ -46,6 +46,7 @@
 		3A1286C00A6B298153C7148E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39A7BBECA19F88EF6070C39 /* ContentView.swift */; };
 		3A2F00420A7EF5ADCDF5B3F3 /* AudioLib.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 48753FCD8BC5030A77AE3032 /* AudioLib.xcdatamodeld */; };
 		3ABDC5F211B9B9FA7B61ADAF /* StorageUsageCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C49B8C5A39A955BCAD1B914 /* StorageUsageCalculator.swift */; };
+		3B571117A213A8DC6C7579B3 /* MacBookInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DFA8CD0C065065F9533B1B9 /* MacBookInspector.swift */; };
 		3BEAE78FC66E4681A00BD232 /* ProgressiveDownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E346457CB21ECE4322F0B8AF /* ProgressiveDownloadManager.swift */; };
 		3C306129A8970D2DF43416E3 /* BookmarksSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2249B18FD17842CBB17463E7 /* BookmarksSheet.swift */; };
 		3CDBD598DD7F3A9203AA2B94 /* SyncService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F598E063426D20ADC8593E27 /* SyncService.swift */; };
@@ -79,6 +80,7 @@
 		643D2FF56BE7B7B42533949F /* PlayerControlsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AB2CF76737D6BDC60D0832C /* PlayerControlsRow.swift */; };
 		65481EF1F773DF248C984209 /* Book+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BC7633C3C850341AFB9B7A /* Book+CoreDataClass.swift */; };
 		68C707027CA24AF835BAE660 /* AudioLibApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8CA74BF58D2E3D6F5241BF /* AudioLibApp.swift */; };
+		68D5B8597440BCF39ECFF483 /* MacLibraryList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4643B2C8B2D89D928FAA2F /* MacLibraryList.swift */; };
 		68D83D7A602B1F097C982E8A /* YouTubeResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = D628AAADCF679142CE08D0BC /* YouTubeResolver.swift */; };
 		691DCB1FBB8C5D5436E40CEC /* Inter-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8B7B9B07C4877C52A7F4B0A1 /* Inter-Bold.ttf */; };
 		6CB3E37E0FF1363448858B42 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4D27484D647B0920E91201 /* AppDelegate.swift */; };
@@ -119,6 +121,7 @@
 		92E9EC42AE1AD96C71F60378 /* CompanionServerResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C3FA44471EFE3E36EA4C215 /* CompanionServerResolver.swift */; };
 		95DBF26CF5CDB75991042942 /* Color+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9287EC694CE40968561460EA /* Color+Hex.swift */; };
 		96917DAD0D2F18EE09B6B2C5 /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D178B74ED0D4DF1B8F59A31 /* DownloadManager.swift */; };
+		96A91ACBE1548E48FED0A34A /* MacBookInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DFA8CD0C065065F9533B1B9 /* MacBookInspector.swift */; };
 		99942A0148BF0476084F58EA /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEA65B6C6D42F603EE008D7 /* Card.swift */; };
 		99F0B160B5ED012CE4308CE9 /* BookmarksSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2249B18FD17842CBB17463E7 /* BookmarksSheet.swift */; };
 		9A09052DE9D37E4EBC6048CD /* MacCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E4761151C183B777137160 /* MacCommands.swift */; };
@@ -142,6 +145,7 @@
 		B6E8EF1A7875167551D58B39 /* AudioSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEDDDAA527BCA96A59F05F4 /* AudioSessionManager.swift */; };
 		B8DD4C1D15480B1412891B09 /* AddBookmarkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B25B589B19032A9556198C /* AddBookmarkButton.swift */; };
 		BB8A99ABFF78D6AF929A267C /* DurationFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A4C7D8627C925B3266BEF00 /* DurationFormatter.swift */; };
+		BC3C2B3453DDAB68B765FCF3 /* MacLibraryList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4643B2C8B2D89D928FAA2F /* MacLibraryList.swift */; };
 		BC8D8570D012F748E3A5D26E /* CoverArtView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1E9FE2C48646E884517F6B /* CoverArtView.swift */; };
 		BCDC8A0034E85D6CCF71AE0B /* FlatTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AEBAB68C200D62AC89483B /* FlatTextField.swift */; };
 		BD5D6858A9B94C282CC0483A /* MacRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E251F08DD0301AA9C0D3614 /* MacRootView.swift */; };
@@ -221,6 +225,7 @@
 		163E62A77691A54FA34AFE6B /* Chapter+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Chapter+CoreDataClass.swift"; sourceTree = "<group>"; };
 		177C7523A693EE64ED736EF8 /* NotesTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesTabView.swift; sourceTree = "<group>"; };
 		1A4FE44D22D87844A175BAB6 /* Bookmark+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bookmark+CoreDataClass.swift"; sourceTree = "<group>"; };
+		1B4643B2C8B2D89D928FAA2F /* MacLibraryList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacLibraryList.swift; sourceTree = "<group>"; };
 		1E07D84AB072D257C9242ACA /* NoteRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteRow.swift; sourceTree = "<group>"; };
 		1E251F08DD0301AA9C0D3614 /* MacRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacRootView.swift; sourceTree = "<group>"; };
 		1FE2919EB997B36F2A25CC54 /* PillButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillButton.swift; sourceTree = "<group>"; };
@@ -270,6 +275,7 @@
 		8AB2CF76737D6BDC60D0832C /* PlayerControlsRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerControlsRow.swift; sourceTree = "<group>"; };
 		8B7B9B07C4877C52A7F4B0A1 /* Inter-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Bold.ttf"; sourceTree = "<group>"; };
 		8B8CA74BF58D2E3D6F5241BF /* AudioLibApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioLibApp.swift; sourceTree = "<group>"; };
+		8DFA8CD0C065065F9533B1B9 /* MacBookInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacBookInspector.swift; sourceTree = "<group>"; };
 		8EF6F8325BF8E32556FC54B4 /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
 		8F4BD957B314C9FFE199A2F5 /* MacPlayerBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacPlayerBar.swift; sourceTree = "<group>"; };
 		9287EC694CE40968561460EA /* Color+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Hex.swift"; sourceTree = "<group>"; };
@@ -469,9 +475,11 @@
 			isa = PBXGroup;
 			children = (
 				D86B88E1C9F1C2EFBD0D511A /* MacAppModel.swift */,
+				8DFA8CD0C065065F9533B1B9 /* MacBookInspector.swift */,
 				36C80EFD1C54B44578FA98BF /* MacChrome.swift */,
 				D1E4761151C183B777137160 /* MacCommands.swift */,
 				527AF83C506C6244AEEE1989 /* MacDownloadsView.swift */,
+				1B4643B2C8B2D89D928FAA2F /* MacLibraryList.swift */,
 				C876A0D51DE30DFD48E489C0 /* MacLibraryView.swift */,
 				9955F572881B8238F4F3B1A4 /* MacNotesView.swift */,
 				943A4912D45A749CD821FE8D /* MacNowPlayingExpanded.swift */,
@@ -849,9 +857,11 @@
 				D706E3392F902AC66205749E /* LibraryTabView.swift in Sources */,
 				DEC879CC4B7E84AE6623FB88 /* LocalNotifications.swift in Sources */,
 				EAB382E5B16775C814A46155 /* MacAppModel.swift in Sources */,
+				96A91ACBE1548E48FED0A34A /* MacBookInspector.swift in Sources */,
 				248A9EB1CFD6C1284624DC4E /* MacChrome.swift in Sources */,
 				9A09052DE9D37E4EBC6048CD /* MacCommands.swift in Sources */,
 				269FC3AFF82DE685BB31A461 /* MacDownloadsView.swift in Sources */,
+				68D5B8597440BCF39ECFF483 /* MacLibraryList.swift in Sources */,
 				8C70085B4DC5B1F816CB603C /* MacLibraryView.swift in Sources */,
 				554718DA82F3298852FB7153 /* MacNotesView.swift in Sources */,
 				274648482075377767128C3C /* MacNowPlayingExpanded.swift in Sources */,
@@ -939,9 +949,11 @@
 				C540783255440E306251D2BC /* LibraryTabView.swift in Sources */,
 				1060F880300FF81391988921 /* LocalNotifications.swift in Sources */,
 				8C557CE4120DD06EDE6C78D1 /* MacAppModel.swift in Sources */,
+				3B571117A213A8DC6C7579B3 /* MacBookInspector.swift in Sources */,
 				8DA6BE0F1B0B118248818199 /* MacChrome.swift in Sources */,
 				492EA7E4865C64AB3DC3F2B5 /* MacCommands.swift in Sources */,
 				14F043D417FD8352DB618347 /* MacDownloadsView.swift in Sources */,
+				BC3C2B3453DDAB68B765FCF3 /* MacLibraryList.swift in Sources */,
 				0A8962C1519DE2A086AD7670 /* MacLibraryView.swift in Sources */,
 				3DC851EFB391BFCB2CCE6BC7 /* MacNotesView.swift in Sources */,
 				FA9ECD922220E27987F329AE /* MacNowPlayingExpanded.swift in Sources */,
