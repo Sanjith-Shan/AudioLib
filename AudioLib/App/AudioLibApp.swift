@@ -34,7 +34,7 @@ struct AudioLibApp: App {
         #endif
         #if os(macOS)
         Settings {
-            SettingsView()
+            MacPreferences()
                 .environment(AppRouter.shared)
                 .environment(\.managedObjectContext, persistence.container.viewContext)
         }
