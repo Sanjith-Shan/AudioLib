@@ -90,7 +90,6 @@
 		6CB3E37E0FF1363448858B42 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4D27484D647B0920E91201 /* AppDelegate.swift */; };
 		6CBD086F3632513638B1AC5E /* MacPlayerBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4BD957B314C9FFE199A2F5 /* MacPlayerBar.swift */; };
 		6CD233974FF889EE32C585DE /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9875015D1BC91D3F6BD7A07 /* PlayerView.swift */; };
-		6E1B766DCC705E1C48D5C1EE /* MacMenuBarExtra.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D8F31F7A22649E45893BFF /* MacMenuBarExtra.swift */; };
 		6F6DF32B3649558079D15961 /* ScrubberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD33C3AED2016EC393DC5391 /* ScrubberView.swift */; };
 		6F8EE06D42D125E3AF902962 /* PillButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE2919EB997B36F2A25CC54 /* PillButton.swift */; };
 		719EFD5A2931BEF61889CA75 /* BookEditSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBB82091673187A380DE958 /* BookEditSheet.swift */; };
@@ -196,7 +195,6 @@
 		F0DEB40A270436B0CCD4F7F7 /* NoteDoc+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA99B2CF709043564FB8692 /* NoteDoc+CoreDataClass.swift */; };
 		F0F3CC84AEB36F395677C2D9 /* DownloadJobStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FE2FF18D9291B03791F2A1 /* DownloadJobStore.swift */; };
 		F149722FB0C681126814A5DA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8816D12175591051F2874D59 /* Assets.xcassets */; };
-		F86113F3A484B5A41F57EA47 /* MacMenuBarExtra.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D8F31F7A22649E45893BFF /* MacMenuBarExtra.swift */; };
 		F9F2E07E88EAE9EA7AC102E4 /* PillButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE2919EB997B36F2A25CC54 /* PillButton.swift */; };
 		FA4987A1D8503A05DA97D2D6 /* ChapterParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0502AA9B84EA1886EFB29FEE /* ChapterParser.swift */; };
 		FA9ECD922220E27987F329AE /* MacNowPlayingExpanded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943A4912D45A749CD821FE8D /* MacNowPlayingExpanded.swift */; };
@@ -330,7 +328,6 @@
 		EF740EE2119DF1987AA11E6E /* CompanionDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanionDownloader.swift; sourceTree = "<group>"; };
 		F246957FA15DE75C99E77D18 /* OnboardingSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSheet.swift; sourceTree = "<group>"; };
 		F598E063426D20ADC8593E27 /* SyncService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncService.swift; sourceTree = "<group>"; };
-		F7D8F31F7A22649E45893BFF /* MacMenuBarExtra.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacMenuBarExtra.swift; sourceTree = "<group>"; };
 		F9875015D1BC91D3F6BD7A07 /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 		FBFB20155A75BE1C93C7D5CF /* CoreData+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreData+Extensions.swift"; sourceTree = "<group>"; };
 		FF1E9FE2C48646E884517F6B /* CoverArtView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverArtView.swift; sourceTree = "<group>"; };
@@ -496,7 +493,6 @@
 				527AF83C506C6244AEEE1989 /* MacDownloadsView.swift */,
 				1B4643B2C8B2D89D928FAA2F /* MacLibraryList.swift */,
 				C876A0D51DE30DFD48E489C0 /* MacLibraryView.swift */,
-				F7D8F31F7A22649E45893BFF /* MacMenuBarExtra.swift */,
 				067FC388EBFABEE51FAD8BB0 /* MacMiniPlayer.swift */,
 				9955F572881B8238F4F3B1A4 /* MacNotesView.swift */,
 				943A4912D45A749CD821FE8D /* MacNowPlayingExpanded.swift */,
@@ -883,7 +879,6 @@
 				269FC3AFF82DE685BB31A461 /* MacDownloadsView.swift in Sources */,
 				68D5B8597440BCF39ECFF483 /* MacLibraryList.swift in Sources */,
 				8C70085B4DC5B1F816CB603C /* MacLibraryView.swift in Sources */,
-				F86113F3A484B5A41F57EA47 /* MacMenuBarExtra.swift in Sources */,
 				1DC1F43F0A0275CDBDFC92A1 /* MacMiniPlayer.swift in Sources */,
 				554718DA82F3298852FB7153 /* MacNotesView.swift in Sources */,
 				274648482075377767128C3C /* MacNowPlayingExpanded.swift in Sources */,
@@ -980,7 +975,6 @@
 				14F043D417FD8352DB618347 /* MacDownloadsView.swift in Sources */,
 				BC3C2B3453DDAB68B765FCF3 /* MacLibraryList.swift in Sources */,
 				0A8962C1519DE2A086AD7670 /* MacLibraryView.swift in Sources */,
-				6E1B766DCC705E1C48D5C1EE /* MacMenuBarExtra.swift in Sources */,
 				0CD8DF1BC6D31D601CD7E00D /* MacMiniPlayer.swift in Sources */,
 				3DC851EFB391BFCB2CCE6BC7 /* MacNotesView.swift in Sources */,
 				FA9ECD922220E27987F329AE /* MacNowPlayingExpanded.swift in Sources */,

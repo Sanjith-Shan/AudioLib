@@ -9,9 +9,6 @@ struct AudioLibApp: App {
     #endif
 
     let persistence = PersistenceController.shared
-    #if os(macOS)
-    @AppStorage("mac.menuBarExtra") private var menuBarExtra = true
-    #endif
 
     init() {
         Task { @MainActor in
@@ -48,11 +45,10 @@ struct AudioLibApp: App {
         .windowStyle(.hiddenTitleBar)
         .windowResizability(.contentSize)
         .defaultPosition(.bottomTrailing)
-
-        MenuBarExtra("AudioLib", systemImage: "headphones", isInserted: $menuBarExtra) {
-            MacMenuBarExtra()
-        }
-        .menuBarExtraStyle(.window)
+        // NOTE: A MenuBarExtra is intentionally omitted. On macOS 26.1 an
+        // inserted MenuBarExtra drives the main window's Buttons into an
+        // infinite scroll-edge-effect update loop (100% CPU / beachball),
+        // regardless of style or content. Revisit if Apple fixes it.
         #endif
     }
 }

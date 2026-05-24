@@ -47,12 +47,8 @@ private func paneScroll<C: View>(@ViewBuilder _ content: () -> C) -> some View {
 
 private struct GeneralPane: View {
     @AppStorage("audiolib.hasOnboarded") private var hasOnboarded = true
-    @AppStorage("mac.menuBarExtra") private var menuBarExtra = true
     var body: some View {
         paneScroll {
-            FormRow(label: "Menu bar", description: "Show a playback control in the macOS menu bar.") {
-                Toggle("Show AudioLib in the menu bar", isOn: $menuBarExtra)
-            }
             FormRow(label: "Onboarding", description: "Show the welcome window again next launch.") {
                 Button("Show Onboarding Again") { hasOnboarded = false }
             }
