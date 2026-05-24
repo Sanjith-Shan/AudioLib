@@ -17,6 +17,7 @@
 		10C5D0CF3A58C7BFDEE0E653 /* SleepTimerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86006797F8CEF793DD032A91 /* SleepTimerSheet.swift */; };
 		14F043D417FD8352DB618347 /* MacDownloadsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527AF83C506C6244AEEE1989 /* MacDownloadsView.swift */; };
 		16C8C7B725D5B64D5AD80717 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8816D12175591051F2874D59 /* Assets.xcassets */; };
+		19157C310AD542723CB45CC7 /* MacTextFormatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB76A56006F30290C82F58DB /* MacTextFormatting.swift */; };
 		1959F08FDC00C9F96FA09999 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953A7A888A06B00F36330FD1 /* SettingsView.swift */; };
 		19AC918C2107537C9D7FE90C /* AppDelegate+macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C35E59354710F7AF15484BB /* AppDelegate+macOS.swift */; };
 		1D5084B0D7BFEF2908AF31F5 /* CoreData+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBFB20155A75BE1C93C7D5CF /* CoreData+Extensions.swift */; };
@@ -96,6 +97,7 @@
 		796B70897B66825D330BB50A /* DownloadJob+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C757CE830DED5400951CA0B9 /* DownloadJob+CoreDataProperties.swift */; };
 		7A10F7FD89F01935FFA998C8 /* Inter-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8B7B9B07C4877C52A7F4B0A1 /* Inter-Bold.ttf */; };
 		7A40959A69B2EA9DC392B25F /* Inter-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 47A98CCE3DF38312B3A54171 /* Inter-SemiBold.ttf */; };
+		7B76D38978A4EA45293D6F55 /* MacTextFormatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB76A56006F30290C82F58DB /* MacTextFormatting.swift */; };
 		7C2C3487D18004EABC922B33 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBD890BE12D847488CE45AE /* Theme.swift */; };
 		7C90129B59EC6D10513C3A30 /* BackgroundDownloadSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158AD5E80B33739CA4997C7C /* BackgroundDownloadSession.swift */; };
 		7D5DD3999B7249D5484B3A06 /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A23768BBF91BA135CBB0CB /* AppRouter.swift */; };
@@ -307,6 +309,7 @@
 		D628AAADCF679142CE08D0BC /* YouTubeResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeResolver.swift; sourceTree = "<group>"; };
 		D86B88E1C9F1C2EFBD0D511A /* MacAppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacAppModel.swift; sourceTree = "<group>"; };
 		D8A42076DBDC735D16EA89E0 /* StreamingResourceLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingResourceLoader.swift; sourceTree = "<group>"; };
+		DB76A56006F30290C82F58DB /* MacTextFormatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacTextFormatting.swift; sourceTree = "<group>"; };
 		DE24DB0CEE993DAF692C24AD /* RichTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextEditor.swift; sourceTree = "<group>"; };
 		E023CCAFB5E1240A3894E7C6 /* NoteStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteStore.swift; sourceTree = "<group>"; };
 		E10C3508CD1A079FA2A03221 /* LibraryTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryTabView.swift; sourceTree = "<group>"; };
@@ -487,6 +490,7 @@
 				8F4BD957B314C9FFE199A2F5 /* MacPlayerBar.swift */,
 				C512490684766D84B6A30A51 /* MacSection.swift */,
 				20E6EC84EA7568AD8D618A10 /* MacSidebarView.swift */,
+				DB76A56006F30290C82F58DB /* MacTextFormatting.swift */,
 			);
 			path = Mac;
 			sourceTree = "<group>";
@@ -870,6 +874,7 @@
 				B07CFF0238D109869656A4FD /* MacRootView.swift in Sources */,
 				B61AA0F1EDFF0C86152172EB /* MacSection.swift in Sources */,
 				CD91952D72534B2263DD3A40 /* MacSidebarView.swift in Sources */,
+				7B76D38978A4EA45293D6F55 /* MacTextFormatting.swift in Sources */,
 				24B8FE139F6DEC41A1E92F96 /* MiniPlayer.swift in Sources */,
 				F0DEB40A270436B0CCD4F7F7 /* NoteDoc+CoreDataClass.swift in Sources */,
 				5B07D9CF0A1BDACDC1E147C3 /* NoteDoc+CoreDataProperties.swift in Sources */,
@@ -962,6 +967,7 @@
 				BD5D6858A9B94C282CC0483A /* MacRootView.swift in Sources */,
 				3351C4BDC3019B5B20E90B7D /* MacSection.swift in Sources */,
 				81DB95D4BEB564DE95F95D96 /* MacSidebarView.swift in Sources */,
+				19157C310AD542723CB45CC7 /* MacTextFormatting.swift in Sources */,
 				5189BDE76CF72DE8F6AB336A /* MiniPlayer.swift in Sources */,
 				81765940892FDC6C29E86029 /* NoteDoc+CoreDataClass.swift in Sources */,
 				E642997F7E57208FADB6881C /* NoteDoc+CoreDataProperties.swift in Sources */,
