@@ -9,6 +9,7 @@ struct MacRootView: View {
     @State private var model = MacAppModel.shared
     @State private var router = AppRouter.shared
     @State private var player = PlayerController.shared
+    @AppStorage("audiolib.hasOnboarded") private var hasOnboarded = false
 
     var body: some View {
         ZStack {
@@ -35,6 +36,10 @@ struct MacRootView: View {
         .environment(router)
         .environment(model)
         .animation(.easeOut(duration: 0.28), value: model.showExpandedPlayer)
+        .sheet(isPresented: Binding(get: { !hasOnboarded }, set: { _ in })) {
+            MacOnboarding { hasOnboarded = true }
+                .interactiveDismissDisabled(true)
+        }
     }
 
     // MARK: - Content column

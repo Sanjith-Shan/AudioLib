@@ -9,6 +9,9 @@ struct AudioLibApp: App {
     #endif
 
     let persistence = PersistenceController.shared
+    #if os(macOS)
+    @AppStorage("mac.menuBarExtra") private var menuBarExtra = true
+    #endif
 
     init() {
         Task { @MainActor in
@@ -38,6 +41,18 @@ struct AudioLibApp: App {
                 .environment(AppRouter.shared)
                 .environment(\.managedObjectContext, persistence.container.viewContext)
         }
+
+        Window("Mini Player", id: "mini") {
+            MacMiniPlayer()
+        }
+        .windowStyle(.hiddenTitleBar)
+        .windowResizability(.contentSize)
+        .defaultPosition(.bottomTrailing)
+
+        MenuBarExtra("AudioLib", systemImage: "headphones", isInserted: $menuBarExtra) {
+            MacMenuBarExtra()
+        }
+        .menuBarExtraStyle(.window)
         #endif
     }
 }
