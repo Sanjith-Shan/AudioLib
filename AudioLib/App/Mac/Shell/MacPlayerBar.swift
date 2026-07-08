@@ -133,10 +133,21 @@ struct MacPlayerBar: View {
 
             HStack(spacing: 6) {
                 Image(systemName: "speaker.fill").font(.system(size: 11)).foregroundStyle(muted)
-                Slider(value: $player.volume, in: 0...1)
-                    .controlSize(.mini).tint(paper.opacity(0.8))
-                    .frame(width: 78)
+                Slider(
+                    value: Binding(
+                        get: { Double(player.volumeBoost) },
+                        set: { player.volumeBoost = Float($0) }
+                    ),
+                    in: 0...Double(PlayerController.maxVolumeBoost)
+                )
+                .controlSize(.mini)
+                .tint(player.volumeBoost > 1.001 ? Theme.Colors.teal : paper.opacity(0.8))
+                .frame(width: 78)
+                Image(systemName: "speaker.wave.3.fill")
+                    .font(.system(size: 11))
+                    .foregroundStyle(player.volumeBoost > 1.001 ? Theme.Colors.teal : muted)
             }
+            .help("Volume — above 100% boosts beyond system max")
 
             Button { model.showExpandedPlayer = true } label: {
                 Image(systemName: "chevron.up")

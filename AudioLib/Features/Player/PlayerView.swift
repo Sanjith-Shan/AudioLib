@@ -63,6 +63,10 @@ struct PlayerView: View {
 
                         PlayerControlsRow()
 
+                        VolumeBoostRow()
+                            .padding(.horizontal, Theme.Spacing.lg)
+                            .padding(.bottom, 4)
+
                         PlayerSecondaryRow(
                             showingSpeedSheet: $showingSpeedSheet,
                             showingSleepSheet: $showingSleepSheet,

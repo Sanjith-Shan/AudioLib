@@ -79,6 +79,7 @@
 		5AEFD85FCA66EF9A8C408602 /* MacSidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E235087ABD7F0608FE2615B1 /* MacSidebarView.swift */; };
 		5B07D9CF0A1BDACDC1E147C3 /* NoteDoc+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C572D2110B6B97C687F0B3F /* NoteDoc+CoreDataProperties.swift */; };
 		5D548B5D4E41F3C13D219B72 /* NotesTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 177C7523A693EE64ED736EF8 /* NotesTabView.swift */; };
+		5E0D36A3090C6A4BAE7B42E4 /* VolumeBoostRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4546056B855C1E4E8B38D1BE /* VolumeBoostRow.swift */; };
 		6164CE963E1D5DCE063D7380 /* NoteEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A64505F91286E403512CE2E /* NoteEditorView.swift */; };
 		62E6E014C2C3EE6B395616BD /* Book+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4275A7632C692B28D033A6B7 /* Book+CoreDataProperties.swift */; };
 		643D2FF56BE7B7B42533949F /* PlayerControlsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AB2CF76737D6BDC60D0832C /* PlayerControlsRow.swift */; };
@@ -156,6 +157,7 @@
 		BB8A99ABFF78D6AF929A267C /* DurationFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A4C7D8627C925B3266BEF00 /* DurationFormatter.swift */; };
 		BC8D8570D012F748E3A5D26E /* CoverArtView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1E9FE2C48646E884517F6B /* CoverArtView.swift */; };
 		BCDC8A0034E85D6CCF71AE0B /* FlatTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AEBAB68C200D62AC89483B /* FlatTextField.swift */; };
+		BDC035A2B8CA8660EAB69128 /* VolumeBoostRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4546056B855C1E4E8B38D1BE /* VolumeBoostRow.swift */; };
 		BDEDC652459F9026A18E4DA6 /* Bookmark+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4FE44D22D87844A175BAB6 /* Bookmark+CoreDataClass.swift */; };
 		BE8EF7A501C9857839E148A5 /* NoteRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E07D84AB072D257C9242ACA /* NoteRow.swift */; };
 		C0B628120DFE8F553FAD6E7A /* MacMiniPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7030091473AE8606DA9C6EF5 /* MacMiniPlayer.swift */; };
@@ -252,6 +254,7 @@
 		4142E0256E98185CEA2A07DD /* LibraryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryRow.swift; sourceTree = "<group>"; };
 		4275A7632C692B28D033A6B7 /* Book+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Book+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		429A6D220FA849F95B58C1F3 /* Inter-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Regular.ttf"; sourceTree = "<group>"; };
+		4546056B855C1E4E8B38D1BE /* VolumeBoostRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeBoostRow.swift; sourceTree = "<group>"; };
 		47A98CCE3DF38312B3A54171 /* Inter-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-SemiBold.ttf"; sourceTree = "<group>"; };
 		480C4DA0F1A7247E7C2DEEB5 /* AudioLib.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AudioLib.entitlements; sourceTree = "<group>"; };
 		4C122AFEBC7BC61ACFF7AE9B /* AudioLibUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioLibUITests.swift; sourceTree = "<group>"; };
@@ -540,6 +543,7 @@
 				AD33C3AED2016EC393DC5391 /* ScrubberView.swift */,
 				86006797F8CEF793DD032A91 /* SleepTimerSheet.swift */,
 				96CAB7382E3FFAAA4664C021 /* SpeedSheet.swift */,
+				4546056B855C1E4E8B38D1BE /* VolumeBoostRow.swift */,
 			);
 			path = Player;
 			sourceTree = "<group>";
@@ -941,6 +945,7 @@
 				4D52032B0FD11CD235CC4171 /* StreamingResourceLoader.swift in Sources */,
 				793F2EC9E113EEF420320046 /* SyncService.swift in Sources */,
 				7C2C3487D18004EABC922B33 /* Theme.swift in Sources */,
+				BDC035A2B8CA8660EAB69128 /* VolumeBoostRow.swift in Sources */,
 				68D83D7A602B1F097C982E8A /* YouTubeResolver.swift in Sources */,
 				852D088D0C72FA0EBDE1B761 /* YouTubeResolverFactory.swift in Sources */,
 			);
@@ -1037,6 +1042,7 @@
 				4B89E2E47147EA9427B45CD5 /* StreamingResourceLoader.swift in Sources */,
 				3CDBD598DD7F3A9203AA2B94 /* SyncService.swift in Sources */,
 				7301B1E67476345FB3FCD287 /* Theme.swift in Sources */,
+				5E0D36A3090C6A4BAE7B42E4 /* VolumeBoostRow.swift in Sources */,
 				9A7901E3C59714DB812A70F5 /* YouTubeResolver.swift in Sources */,
 				D7278DB4393B1057B1224CE3 /* YouTubeResolverFactory.swift in Sources */,
 			);
