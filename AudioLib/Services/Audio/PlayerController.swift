@@ -36,10 +36,14 @@ class PlayerController: NSObject {
     // MARK: - Audio engine graph
     // playerNode → timePitch (playback rate, pitch preserved) → eq (gain boost)
     //            → engine.mainMixerNode → output
-    private let engine = AVAudioEngine()
-    private let playerNode = AVAudioPlayerNode()
-    private let timePitch = AVAudioUnitTimePitch()
-    private let eq = AVAudioUnitEQ(numberOfBands: 0)
+    //
+    // Built lazily on first playback — NEVER at app launch. Touching CoreAudio
+    // this early (PlayerController.shared is created at launch by MiniPlayer)
+    // hangs the main thread on-device and trips the launch watchdog (SIGKILL).
+    private var engine: AVAudioEngine?
+    private var playerNode: AVAudioPlayerNode?
+    private var timePitch: AVAudioUnitTimePitch?
+    private var eq: AVAudioUnitEQ?
 
     private var currentFileURL: URL?
     private var sampleRate: Double = 44100
@@ -68,20 +72,47 @@ class PlayerController: NSObject {
             volumeBoost = min(max(stored, 0), Self.maxVolumeBoost)
         }
 
-        engine.attach(playerNode)
-        engine.attach(timePitch)
-        engine.attach(eq)
-        applyGain()
-
+        // NOTE: no audio-engine work here. See the lazy setup below.
         setupRemoteCommands()
         setupAudioSessionObservers()
+    }
+
+    // MARK: - Engine setup (lazy)
+
+    /// Creates and wires up the audio engine the first time playback is
+    /// requested. Safe to call repeatedly.
+    private func setupEngineIfNeeded() {
+        guard engine == nil else { return }
+
+        let e = AVAudioEngine()
+        let pn = AVAudioPlayerNode()
+        let tp = AVAudioUnitTimePitch()
+        let q = AVAudioUnitEQ(numberOfBands: 0)
+        e.attach(pn)
+        e.attach(tp)
+        e.attach(q)
+
+        engine = e
+        playerNode = pn
+        timePitch = tp
+        eq = q
+        applyGain()
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleEngineConfigurationChange),
+            name: .AVAudioEngineConfigurationChange,
+            object: e
+        )
     }
 
     // MARK: - Gain
 
     /// Maps the 0…maxVolumeBoost multiplier onto the EQ's global gain in
     /// decibels. 1.0 → 0 dB (unity), 3.0 → ~+9.5 dB. 0 → effectively muted.
+    /// No-op until the engine exists; gain is applied on setup.
     private func applyGain() {
+        guard let eq else { return }
         if volumeBoost <= 0.001 {
             eq.globalGain = -96
         } else {
@@ -139,6 +170,9 @@ class PlayerController: NSObject {
     /// (Re)connects the engine graph to match the file's processing format and
     /// starts the engine. Returns false if the file can't be opened.
     private func prepareGraph(for url: URL) -> Bool {
+        setupEngineIfNeeded()
+        guard let engine, let playerNode, let timePitch, let eq else { return false }
+
         let format: AVAudioFormat
         do {
             let file = try AVAudioFile(forReading: url)
@@ -150,6 +184,10 @@ class PlayerController: NSObject {
         }
 
         currentFileURL = url
+
+        // The session must be active/configured before the engine's output node
+        // pulls the hardware format, otherwise start() can fail on device.
+        AudioSessionManager.shared.activate()
 
         engine.disconnectNodeOutput(playerNode)
         engine.disconnectNodeOutput(timePitch)
@@ -175,7 +213,7 @@ class PlayerController: NSObject {
     /// Does not begin playback (call play()).
     private func startPlayback(fromSeconds seconds: Double) {
         scheduleGeneration += 1
-        playerNode.stop()
+        playerNode?.stop()
         startOffsetSeconds = max(0, seconds)
         currentTime = startOffsetSeconds
         let startFrame = AVAudioFramePosition(startOffsetSeconds * sampleRate)
@@ -188,7 +226,8 @@ class PlayerController: NSObject {
     /// for more audio — this both drives natural end-of-file finishing and
     /// progressive "listen while downloading" playback.
     private func scheduleTail(fromFrame startFrame: AVAudioFramePosition, generation: Int) {
-        guard generation == scheduleGeneration, let url = currentFileURL else { return }
+        guard generation == scheduleGeneration, let url = currentFileURL,
+              let playerNode else { return }
 
         let file: AVAudioFile
         do { file = try AVAudioFile(forReading: url) } catch { return }
@@ -233,6 +272,8 @@ class PlayerController: NSObject {
     // MARK: - Transport
 
     func play() {
+        // Nothing to play until a book has been loaded (engine built lazily).
+        guard let engine, let playerNode else { return }
         AudioSessionManager.shared.activate()
         if !engine.isRunning {
             engine.prepare()
@@ -245,7 +286,7 @@ class PlayerController: NSObject {
     }
 
     func pause() {
-        playerNode.pause()
+        playerNode?.pause()
         isPlaying = false
         stopProgressTimer()
         saveProgress()
@@ -262,14 +303,14 @@ class PlayerController: NSObject {
         let startFrame = AVAudioFramePosition(clamped * sampleRate)
 
         scheduleGeneration += 1
-        playerNode.stop()
+        playerNode?.stop()
         startOffsetSeconds = clamped
         currentTime = clamped
         partialRetryCount = 0
         scheduleTail(fromFrame: startFrame, generation: scheduleGeneration)
 
         if wasPlaying {
-            playerNode.play()
+            playerNode?.play()
             isPlaying = true
         }
         saveProgress()
@@ -288,7 +329,7 @@ class PlayerController: NSObject {
 
     func setRate(_ rate: Float) {
         playbackRate = rate
-        timePitch.rate = rate
+        timePitch?.rate = rate
         currentBook?.playbackRate = rate
         try? PersistenceController.shared.container.viewContext.save()
         updateNowPlayingInfo()
@@ -296,8 +337,8 @@ class PlayerController: NSObject {
 
     func stop() {
         scheduleGeneration += 1
-        playerNode.stop()
-        if engine.isRunning { engine.pause() }
+        playerNode?.stop()
+        if let engine, engine.isRunning { engine.pause() }
         currentFileURL = nil
         isPartialPlayback = false
         isPlaying = false
@@ -347,8 +388,9 @@ class PlayerController: NSObject {
             guard let self = self else { return }
 
             if self.isPlaying,
-               let nodeTime = self.playerNode.lastRenderTime,
-               let playerTime = self.playerNode.playerTime(forNodeTime: nodeTime),
+               let node = self.playerNode,
+               let nodeTime = node.lastRenderTime,
+               let playerTime = node.playerTime(forNodeTime: nodeTime),
                playerTime.sampleRate > 0 {
                 let elapsed = Double(playerTime.sampleTime) / playerTime.sampleRate
                 self.currentTime = self.startOffsetSeconds + max(0, elapsed)
@@ -379,7 +421,7 @@ class PlayerController: NSObject {
         // Re-arm from the top so the next play() has audio scheduled.
         if currentFileURL != nil {
             scheduleGeneration += 1
-            playerNode.stop()
+            playerNode?.stop()
             scheduleTail(fromFrame: 0, generation: scheduleGeneration)
         }
         updateNowPlayingInfo()
@@ -490,13 +532,20 @@ class PlayerController: NSObject {
             name: AVAudioSession.routeChangeNotification,
             object: nil
         )
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(handleEngineConfigurationChange),
-            name: .AVAudioEngineConfigurationChange,
-            object: engine
-        )
         #endif
+    }
+
+    // The engine can tear down its render graph after a route change
+    // (e.g. plugging in headphones). Restart it so playback survives.
+    // Registered in setupEngineIfNeeded once the engine exists.
+    @objc private func handleEngineConfigurationChange(_ notification: Notification) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self, let engine = self.engine,
+                  self.currentFileURL != nil, !engine.isRunning else { return }
+            engine.prepare()
+            try? engine.start()
+            if self.isPlaying { self.playerNode?.play() }
+        }
     }
 
     #if os(iOS)
@@ -528,17 +577,6 @@ class PlayerController: NSObject {
 
         if wasHeadphones && isPlaying {
             DispatchQueue.main.async { [weak self] in self?.pause() }
-        }
-    }
-
-    // The engine can tear down its render graph after a route change
-    // (e.g. plugging in headphones). Restart it so playback survives.
-    @objc private func handleEngineConfigurationChange(_ notification: Notification) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self, self.currentFileURL != nil, !self.engine.isRunning else { return }
-            self.engine.prepare()
-            try? self.engine.start()
-            if self.isPlaying { self.playerNode.play() }
         }
     }
     #endif

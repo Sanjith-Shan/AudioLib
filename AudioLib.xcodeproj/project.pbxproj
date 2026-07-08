@@ -265,7 +265,7 @@
 		5C35E59354710F7AF15484BB /* AppDelegate+macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+macOS.swift"; sourceTree = "<group>"; };
 		5FEA65B6C6D42F603EE008D7 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		5FEDDDAA527BCA96A59F05F4 /* AudioSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSessionManager.swift; sourceTree = "<group>"; };
-		62A61E86DC4DD89F03D5D00C /* AudioLibMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioLibMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		62A61E86DC4DD89F03D5D00C /* AudioLibMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = AudioLibMac.app; path = AudioLib.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63A23768BBF91BA135CBB0CB /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
 		64A96CF643BCFCA5EE222934 /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
 		67E8ADFAA80BA1510286D952 /* AudioLibTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioLibTests.swift; sourceTree = "<group>"; };
@@ -300,7 +300,7 @@
 		9E691E1CF0141867A5779A23 /* MacDownloadsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacDownloadsView.swift; sourceTree = "<group>"; };
 		9F04621D1A9260B8C792C610 /* Bookmark+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bookmark+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		A723357D4EDFDDB82D15501F /* MacNowPlayingExpanded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacNowPlayingExpanded.swift; sourceTree = "<group>"; };
-		A91CF75AB56B9C91AA209907 /* AudioLib.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = AudioLib.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A91CF75AB56B9C91AA209907 /* AudioLib.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioLib.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD33C3AED2016EC393DC5391 /* ScrubberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrubberView.swift; sourceTree = "<group>"; };
 		AE0A1613AE5C22463AFD1229 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		AECF050766E247DD34B56B7F /* PlayerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerController.swift; sourceTree = "<group>"; };
@@ -1232,6 +1232,7 @@
 				CODE_SIGN_ENTITLEMENTS = AudioLib/AudioLib.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = 2VFP2J68G8;
 				INFOPLIST_FILE = AudioLib/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1251,6 +1252,7 @@
 				CODE_SIGN_ENTITLEMENTS = AudioLib/AudioLib.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = 2VFP2J68G8;
 				INFOPLIST_FILE = AudioLib/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
